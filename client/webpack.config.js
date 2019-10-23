@@ -69,6 +69,7 @@ module.exports = {
     stats: 'errors-only',
     overlay: true,
     contentBase: path.join(__dirname, 'dist/pages/'),
+    publicPath: '/dist',
     compress: false,
     port: 3030,
     open: true,

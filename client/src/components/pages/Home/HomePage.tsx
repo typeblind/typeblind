@@ -4,10 +4,6 @@ import { RootState } from '../../../store/index';
 import { css, keyframes } from '@emotion/core';
 import { useLocation } from 'wouter';
 import Page from '../../layout/Page';
-import Rightside from './Rightside';
-import Leftside from './Leftside';
-import { getCookie } from '../../../utils/cookies';
-import AnimatedTitle from '../../layout/AnimatedTitle';
 
 const HomePage = () => {
   const theme = useSelector((state: RootState) => state.theme);
@@ -54,16 +50,7 @@ const HomePage = () => {
 
   return (
     <Page>
-        {
-          isTitle && !!getCookie(location) === false?
-          <AnimatedTitle titles={['WEL', 'COME']} />
-          :
-          <div className="home-page" css={homeStyles}>
-            <Rightside />
-            <Leftside />
-          </div>
-        }
-      
+        <h2> Home page  </h2>
     </Page>
   )
 }

@@ -8,15 +8,9 @@ import LangCard from './LangCard';
 
 const HomePage = () => {
   const theme = useSelector((state: RootState) => state.theme);
+  const langs = useSelector((state: RootState) => state.langs);
   const [location] = useLocation();
   const [isTitle, setisTitle] = useState(true);
-  const languages = [
-    'GoLang',
-    'JavaScript',
-    'Python',
-    'Java',
-    'C++',
-  ]
 
   const home = keyframes`
     0% {
@@ -62,8 +56,12 @@ const HomePage = () => {
 
         <div className="cards">
           {
-            languages.map((card: string) => (
-              <LangCard  name={card} />
+            Object.keys(langs).map((name: string) => (
+              <LangCard  
+                name={name} 
+                color={langs[name].color} 
+                extension={langs[name].ext}
+              />
             ))
           }
         </div>

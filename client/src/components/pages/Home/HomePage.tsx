@@ -4,11 +4,19 @@ import { RootState } from '../../../store/index';
 import { css, keyframes } from '@emotion/core';
 import { useLocation } from 'wouter';
 import Page from '../../layout/Page';
+import LangCard from './LangCard';
 
 const HomePage = () => {
   const theme = useSelector((state: RootState) => state.theme);
   const [location] = useLocation();
   const [isTitle, setisTitle] = useState(true);
+  const languages = [
+    'GoLang',
+    'JavaScript',
+    'Python',
+    'Java',
+    'C++',
+  ]
 
   const home = keyframes`
     0% {
@@ -51,6 +59,14 @@ const HomePage = () => {
   return (
     <Page>
         <h2> Home page  </h2>
+
+        <div className="cards">
+          {
+            languages.map((card: string) => (
+              <LangCard  name={card} />
+            ))
+          }
+        </div>
     </Page>
   )
 }

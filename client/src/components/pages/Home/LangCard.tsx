@@ -4,7 +4,7 @@ import Page from '../../layout/Page';
 
 type LangCard = {
   name: string;
-  color: string;
+  color?: string;
 }
 
 const LangCard: FC<LangCard> = ({ name, color }) => {

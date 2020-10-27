@@ -1,17 +1,7 @@
 import * as types from './types';
 import { ThemeAction } from './ThemeActionTypes';
 export type Theme = {
-  colors: {
-    brand: string,
-    brandDark: string,
-    green: string,
-    greenDark: string,
-    red: string,
-    shadow: string,
-    white: string,
-    black: string,
-    bg: string,
-  }
+  colors: {[key: string]: string}
   common: {
     transition: string;
   }
@@ -26,8 +16,8 @@ export type Theme = {
 
 const initialState: Theme = {
   colors: {
-    brand: '#FCEA00',
-    brandDark: '#1633ff',
+    brand: '#EEF1F0',
+    brandDark: '#111111',
     green: '#14CD73',
     greenDark: '#0CB863',
     red: '#F55466',
@@ -35,6 +25,8 @@ const initialState: Theme = {
     white: '#ffffff',
     black: '#000000',
     bg: '#F3F4F5',
+    text: '#DEDEDE',
+    textDark: '#333333',
   },
   common: {
     transition: '.2s all ease'

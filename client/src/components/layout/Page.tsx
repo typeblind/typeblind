@@ -21,7 +21,7 @@ export default function Page({
   const pageStyles = css`
     background: ${theme.colors.brand};
     width: 100vw;
-  color: ${theme.colors.black};
+    color: ${theme.colors.black};
 
     .navigation {
         font-size: 1.5rem;

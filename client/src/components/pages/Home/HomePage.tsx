@@ -4,13 +4,11 @@ import { RootState } from '../../../store/index';
 import { css, keyframes } from '@emotion/core';
 import { useLocation } from 'wouter';
 import Page from '../../layout/Page';
-import Rightside from './Rightside';
-import Leftside from './Leftside';
-import { getCookie } from '../../../utils/cookies';
-import AnimatedTitle from '../../layout/AnimatedTitle';
+import LangCard from './LangCard';
 
 const HomePage = () => {
   const theme = useSelector((state: RootState) => state.theme);
+  const langs = useSelector((state: RootState) => state.langs);
   const [location] = useLocation();
   const [isTitle, setisTitle] = useState(true);
 
@@ -54,16 +52,19 @@ const HomePage = () => {
 
   return (
     <Page>
-        {
-          isTitle && !!getCookie(location) === false?
-          <AnimatedTitle titles={['WEL', 'COME']} />
-          :
-          <div className="home-page" css={homeStyles}>
-            <Rightside />
-            <Leftside />
-          </div>
-        }
-      
+        <h2> Home page  </h2>
+
+        <div className="cards">
+          {
+            Object.keys(langs).map((name: string) => (
+              <LangCard  
+                name={name} 
+                color={langs[name].color} 
+                extension={langs[name].ext}
+              />
+            ))
+          }
+        </div>
     </Page>
   )
 }

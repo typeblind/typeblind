@@ -5,6 +5,8 @@ import { RootState } from '../../store/index';
 import { setCookie } from '../../utils/cookies';
 import { ANIMATED_PATHS } from '../../consts';
 import useLocation from 'wouter/use-location';
+import { navigatorUtils } from '../../utils';
+
 
 export default function Page({
   children
@@ -15,8 +17,10 @@ export default function Page({
     if (location.includes(route)) {
       setCookie(route, 'true');
     }
-  })
-  
+  });
+
+  const osName = navigatorUtils.getOSName();
+  const isSupportedOS = osName !== "iOS" && osName !== "Android";
 
   const pageStyles = css`
     background: ${theme.colors.brand};
@@ -91,7 +95,13 @@ export default function Page({
       className={'page'}
       css={pageStyles}
     >      
-      { children }
+      {isSupportedOS ? 
+        (children)
+        : 
+        <div className="mobile-hide">
+          Sorry, this app does not support mobile phones
+        </div>
+      }
     </div>
   )
 }

@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"github.com/sirupsen/logrus"
 	"github.com/gorilla/mux"
+	"github.com/kletskovg/type-code/server/internal/github"
 )
 
 type APIServer struct{
@@ -42,12 +43,20 @@ func (s *APIServer) configureLogger() error {
 }
 
 func (s *APIServer) configureRouter() {
-	s.router.HandleFunc("/hello", s.handleHello())
+	s.router.HandleFunc("/file", s.handleGetFile())
 }
 
 func (s *APIServer) handleHello() http.HandlerFunc {
 	return func (w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(("Hello on Hello page")))
+	}
+}
+
+func (s *APIServer) handleGetFile() http.HandlerFunc {
+	return func (w http.ResponseWriter, r *http.Request) {
+		github.GetFile(".go")
+		
+		w.Write([]byte(("Look to the console")))
 	}
 }
 

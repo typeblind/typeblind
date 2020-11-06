@@ -1,31 +1,36 @@
 import * as types from './types';
 import { LangsAction } from './langsActionTypes';
+import { LangCardProps } from '../../components/pages/Home/LangCard';
 
 export type LangsStore = {
-  [key: string] : {
-    name: string;
-    color: string;
-    ext: string;
-  }
+  [key: string] : LangCardProps
 }
 
-const initialState = {
+const initialState: LangsStore = {
   go: {
     name: 'GoLang',
     color: '#00ACD7',
-    ext: '.go',
+    extension: '.go',
+    description: 'Modern and fast language for back-end'
   },
   js: {
     name: 'JavaScript',
     color: '#E8D44D',
-    ext: '.js'
+    extension: '.js',
+    description: 'Language for building interfaces'
   },
   ts: {
     name: 'TypeScript',
     color: '#2F74C0',
-    ext: '.ts',
+    extension: '.ts',
+    description: 'Version of JavaScript with types and other cool stuff'
   },
-
+  cpp: {
+    name: 'C++',
+    color: '#F34B7D',
+    extension: '.cpp',
+    description: 'Garbage',
+  }
 }
 
 export const langsReducer = (

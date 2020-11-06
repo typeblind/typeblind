@@ -27,40 +27,32 @@ const HomePage = () => {
   `;
 
   const homeStyles = css`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100vw;
-    position: relative;
-    padding-top: 3%;
-
-    @media (max-width: 560px) {
-      flex-direction: column;
-    }
-
-    .job-title {
-      width: 50%;
-      align-self: flex-start;
-    }
+    
   `;
 
-  useEffect(() => {
-    setTimeout(() => {
-      setisTitle(false);
-    }, 1700);
-  }, []);
+  const cardsStyles = css`
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  `;
 
   return (
     <Page>
         <h2> Home page  </h2>
 
-        <div className="cards">
+        <div 
+          className="cards"
+          css={cardsStyles}
+        >
           {
             Object.keys(langs).map((name: string) => (
               <LangCard  
                 name={name} 
                 color={langs[name].color} 
-                extension={langs[name].ext}
+                extension={langs[name].extension}
+                description={langs[name].description}
               />
             ))
           }

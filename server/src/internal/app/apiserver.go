@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"github.com/sirupsen/logrus"
 	"github.com/gorilla/mux"
-	"github.com/kletskovg/type-code/server/internal/github"
+	"github.com/kletskovg/type-code/server/src/internal/github"
 )
 
 type APIServer struct{

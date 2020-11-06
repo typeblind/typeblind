@@ -73,3 +73,4 @@ client_old/
 deploy
 server/dist
 .DS_Store
+docker-compose.yml

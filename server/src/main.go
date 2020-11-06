@@ -1,7 +1,7 @@
 package main
 import (
 	"log"
-	"github.com/kletskovg/type-code/server/internal/app"
+	"github.com/kletskovg/type-code/server/src/internal/app"
 )
 
 func main() {

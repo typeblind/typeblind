@@ -74,3 +74,4 @@ deploy
 server/dist
 .DS_Store
 docker-compose.yml
+update.sh

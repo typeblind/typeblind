@@ -52,9 +52,5 @@ func GetFile(extension string) string {
 	} else {
 		fmt.Println(result)
 	}
-
-	fmt.Println("ORgs")
-	fmt.Println(result[0])
-	fmt.Println(len(result))
  	return "Hello"
 }

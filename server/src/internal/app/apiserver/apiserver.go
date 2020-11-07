@@ -1,6 +1,7 @@
 package apiserver
 
 import (
+	// "github.com/kletskovg/typecode/server/src/internal/utils"
 	"net/http"
 	"github.com/sirupsen/logrus"
 	"github.com/gorilla/mux"
@@ -49,6 +50,7 @@ func (s *APIServer) configureRouter() {
 
 func (s *APIServer) handleHello() http.HandlerFunc {
 	return func (w http.ResponseWriter, r *http.Request) {
+		github.GetRandomOrg("go")
 		w.Write([]byte(("Hello on Hello page")))
 	}
 }

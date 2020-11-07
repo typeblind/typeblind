@@ -112,6 +112,7 @@ github.com/kletskovg/type-code/server/src v0.0.0-20201106213440-bd77db976089 h1:
 github.com/kletskovg/type-code/server/src v0.0.0-20201106213440-bd77db976089/go.mod h1:QEs5sNw56GoR7DnnC920GUr4MnTfJ9eMRoyDz53K5dw=
 github.com/kletskovg/typecode v0.0.0-20201106220042-89915115529f h1:cj7/XNkZ8R49fJwwdOYzo5vaXmhpO4xbeRdXeg2j8EQ=
 github.com/kletskovg/typecode v0.0.0-20201106230257-81689100d60e h1:2+MLKALDc/PS43Uf0HvGk0xHyzzOT4jkgthCZTdXHBo=
+github.com/kletskovg/typecode v0.0.0-20201107004555-df6e1d54c539 h1:hnVjSnizxxN1DPQZYRbXnORKRxUrm3dNcczKYuYLbEY=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=

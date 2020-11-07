@@ -4,8 +4,17 @@ package consts
 const GitHubStartDate string = "GITHUB"
 
 // AppliedOrgs return array of urls of applied orgs
-func AppliedOrgs () [4]string {
-	AppliedOrgs := [4]string {"first", "second", "third", "fourth"};
+func AppliedOrgs () []string {
+	AppliedOrgs := []string {
+		"google", // Google
+		"apple", // Apple
+		"rambler-digital-solutions", // Rambler Group 
+		"oracle", // Oracle
+		"microsoft", // Microsoft
+		"ibm", //IBM
+		"yandex", // Yandex
+		"mailru", // Mail Ru
+	};
 	return AppliedOrgs
 }
 

@@ -1,6 +1,7 @@
 package apiserver
 
 import (
+	// "github.com/kletskovg/typecode/server/src/internal/utils"
 	"net/http"
 	"github.com/sirupsen/logrus"
 	"github.com/gorilla/mux"
@@ -44,10 +45,12 @@ func (s *APIServer) configureLogger() error {
 
 func (s *APIServer) configureRouter() {
 	s.router.HandleFunc("/file", s.handleGetFile())
+	s.router.HandleFunc("/", s.handleHello())
 }
 
 func (s *APIServer) handleHello() http.HandlerFunc {
 	return func (w http.ResponseWriter, r *http.Request) {
+		go github.GetRandomRepository("JavaScript")
 		w.Write([]byte(("Hello on Hello page")))
 	}
 }

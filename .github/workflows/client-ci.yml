@@ -1,0 +1,57 @@
+name: Client-Test
+
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+    types:
+      [opened, reopened]
+
+jobs:
+ 
+  # New job
+  build:
+    name: build
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        node_version: [12]
+    env:
+      LOGIN: ${{ secrets.DOCKER_LOGIN }}
+      DOCKER: ${{ secrets.DOCKER_NAME }}
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: develop
+    - name: Use Node.js ${{ matrix.node_version }}
+      uses: actions/setup-node@v1
+      with:
+        version: ${{ matrix.node_version }}
+ 
+  # New job
+  test:
+    name: testFront
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        node_version: [12]
+    env:
+      LOGIN: ${{ secrets.DOCKER_LOGIN }}
+      DOCKER: ${{ secrets.DOCKER_NAME }}
+    needs: build
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: develop
+    - name: Use Node.js ${{ matrix.node_version }}
+      uses: actions/setup-node@v1
+      with:
+        version: ${{ matrix.node_version }}
+    - name: Testing frontend
+      run: |
+        cd client
+        docker build -t ${{secrets.TYPECODE_FRONTEND_IMAGE}} .
+      # docker run -d -p 80:80 ${{secrets.TYPECODE_FRONTEND_IMAGE}}
+      # npm run test

@@ -13,13 +13,13 @@ const initialState: LangsStore = {
     extension: '.go',
     description: 'Modern and fast language for back-end'
   },
-  js: {
+  JavaScript: {
     name: 'JavaScript',
     color: '#E8D44D',
     extension: '.js',
     description: 'Language for building interfaces'
   },
-  ts: {
+  TypeScript: {
     name: 'TypeScript',
     color: '#2F74C0',
     extension: '.ts',

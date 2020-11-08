@@ -50,7 +50,7 @@ func (s *APIServer) configureRouter() {
 
 func (s *APIServer) handleHello() http.HandlerFunc {
 	return func (w http.ResponseWriter, r *http.Request) {
-		github.GetRandomRepository("go")
+		go github.GetRandomRepository("JavaScript")
 		w.Write([]byte(("Hello on Hello page")))
 	}
 }

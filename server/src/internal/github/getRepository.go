@@ -6,11 +6,14 @@ import (
 	"github.com/kletskovg/typecode/server/src/internal/consts"
 	"github.com/kletskovg/typecode/server/src/internal/utils"
 	log "github.com/sirupsen/logrus"
+	// "fmt"
+	"strings"
 )
 
 func GetRandomRepository(language string) (*github.Repository, error) {
 	appliedOrgs := consts.AppliedOrgs()
 	utils.ShuffleStrings(appliedOrgs)
+
 	for i := range appliedOrgs {
 		repo, err := tryToFindRepo(appliedOrgs[i], language)
 
@@ -21,26 +24,34 @@ func GetRandomRepository(language string) (*github.Repository, error) {
 		}
 	}
 
+	log.WithFields(log.Fields{
+		"language": language,
+	}).Info("Nothing was found for")
 	return nil, nil
 }
 
 
-func tryToFindRepo(organization string, language string) (*github.Repository , error){
+func tryToFindRepo(organization string, language string) (*github.Repository, error){
 	ctx := context.Background()
 	client := github.NewClient(nil)
-	searchQuery := "org:" + organization + "+language:" + language 
-	result, _, err := client.Search.Repositories(ctx, searchQuery, nil)
-
+	searchQuery := "org:" + organization + "+language:" + language
+	log.Info(searchQuery)
+	repos, _, err := client.Repositories.List(ctx, organization, nil)
 	if err != nil {
 		log.Error(err.Error())
 		return nil, err
-	} else if result != nil {
-		return nil, nil
-	} else {
-		repo := result.Repositories[utils.GetRandomElement(len(result.Repositories))]
-		log.WithFields(log.Fields{
-			"repo": repo,
-		}).Info("Successfully find repo")
-		return &repo, nil
+	} 
+
+	for i := range repos {
+		lang := repos[i].GetLanguage()
+
+		if strings.ToUpper(lang) == strings.ToUpper(language) {
+			log.WithFields(log.Fields{
+				"repo": repos[i],
+			}).Info("Sucessfully find repo")
+			return repos[i], err
+		}
 	}
+
+	return nil, nil
 }

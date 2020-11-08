@@ -8,22 +8,39 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func GetRandomOrg(language string) (*github.Organization, error) {
-	ctx := context.Background()
-	client := github.NewClient(nil)
-
+func GetRandomOrg(language string) (*github.Repository, error) {
 	appliedOrgs := consts.AppliedOrgs()
 	utils.ShuffleStrings(appliedOrgs)
-	certainOrg := appliedOrgs[0]
-	orgData, _, err := client.Organizations.Get(ctx, certainOrg)
-	
-	if err != nil  {
-		log.Error("Error during get organization " + err.Error())
+	for i := range appliedOrgs {
+		repo, err := tryToFindRepo(appliedOrgs[i], language)
+
+		if err != nil {
+			return nil, err
+		} else if repo != nil {
+			return repo, nil
+		}
+	}
+
+	return nil, nil
+}
+
+
+func tryeToFindRepo(organization string, language string) (*github.Repository , error){
+	ctx := context.Background()
+	client := github.NewClient(nil)
+	searchQuery := "org:" + organization + "+language:" + language 
+	result, _, err := client.Search.Repositories(ctx, searchQuery, nil)
+
+	if err != nil {
+		log.Error(err.Error())
 		return nil, err
+	} else if result != nil {
+		return nil, nil
 	} else {
+		repo := result.Repositories[utils.GetRandomElement(len(result.Repositories))]
 		log.WithFields(log.Fields{
-			"organization": orgData,
-		}).Info("Get orgs success")
-		return orgData, nil
+			"repo": repo,
+		}).Info("Successfully find repo")
+		return &repo, nil
 	}
 }

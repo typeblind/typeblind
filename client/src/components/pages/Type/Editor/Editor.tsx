@@ -10,7 +10,9 @@ export default function Editor() {
   }, [])
   return (
     <div>
-      Hello, testing
+      <div id="codes">
+        var test = 1
+      </div>
     </div>
   )
 }

@@ -1,10 +1,16 @@
-import React from 'react'
+import React, {FC} from 'react'
+
+type LineProps = {
+  line: string[]
+}
 
 // Line of code
-export default function Line() {
+const Line: FC<LineProps> = ({ line }) => {
   return (
     <div>
-      
+      { line.map(char => <span> {char} </span>) }
     </div>
   )
 }
+
+export default Line

@@ -14,6 +14,16 @@ func AppliedOrgs () []string {
 		"ibm", //IBM
 		"yandex", // Yandex
 		"mailru", // Mail Ru
+		"adobe", // Adobe
+		"netflix", 
+		"docker",
+		"stripe",
+		"alibaba",
+		"cloudflare",
+		"sap",
+		"shopify",
+		"yelp",
+		"twitter",
 	};
 	return AppliedOrgs
 }

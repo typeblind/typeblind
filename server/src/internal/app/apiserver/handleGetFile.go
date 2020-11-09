@@ -6,11 +6,16 @@ import (
 	"strings"
 	"encoding/json"
 	log "github.com/sirupsen/logrus"
+	"github.com/gorilla/mux"
 )
 
 func (server *APIServer) HandleGetFile (language string) http.HandlerFunc {
 	return func (w http.ResponseWriter, r *http.Request) {
-		// 
+		params := mux.Vars(r)
+		extension := params["language"]
+		log.WithFields(log.Fields{
+			"language": extension,
+		}).Warn("SEE QUERY PARAM")
 		log.Info("GETTING FILE")
 		file, getFileErr := github.GetFile("go")
 		log.Warning(file)

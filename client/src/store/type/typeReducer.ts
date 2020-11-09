@@ -2,25 +2,48 @@ import * as types from './types';
 import { TypeAction } from './typeActionTypes';
 import { inferStringLiteral } from '../typeFunctions';
 
-const initialState = {
-  
+export interface TypingStore {
+  loading: boolean;
+  error: Error | null
+  lines: Array<string[]> // Array of string arrays
 }
 
-export const ThemeReducer = (
+const initialState = {
+  loading: false,
+  error: null,
+  lines: [],
+}
+
+export const TypingReducer = (
   state = initialState,
   action: TypeAction,
 ) => {
   switch(action.type) {
     case(inferStringLiteral(types.GET_FILE)): {
-      return state;
+      console.log("GET FILE")
+      console.log(action.payload)
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        lines: action.payload,
+      };
     }
 
     case(inferStringLiteral(types.GET_FILE_PENDING)): {
-      return state;
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
     }
 
     case(inferStringLiteral(types.GET_FILE_ERROR)): {
-      return state;
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     }
 
     default: {

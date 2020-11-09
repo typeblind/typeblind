@@ -2,9 +2,9 @@ import * as types from './types'
 import {inferStringLiteral} from '../typeFunctions';
 import { Dispatch, Action } from 'redux'
 
-export const getFileSuccess = (extension: string) => ({
+export const getFileSuccess = (json: any) => ({
   type: inferStringLiteral(types.GET_FILE),
-  payload: null
+  payload: json
 });
 
 export const getFilePending = () => ({

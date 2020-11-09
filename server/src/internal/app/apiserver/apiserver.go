@@ -57,7 +57,7 @@ func (s *APIServer) handleHello() http.HandlerFunc {
 
 func (s *APIServer) handleGetFile() http.HandlerFunc {
 	return func (w http.ResponseWriter, r *http.Request) {
-		github.GetFile(".go")
+		github.GetFile("go")
 		
 		w.Write([]byte(("Look to the console")))
 	}

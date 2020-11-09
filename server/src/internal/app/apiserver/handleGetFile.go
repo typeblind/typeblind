@@ -7,10 +7,12 @@ import (
 	"encoding/json"
 	log "github.com/sirupsen/logrus"
 	"github.com/gorilla/mux"
+	"github.com/kletskovg/typecode/server/src/internal/utils"
 )
 
 func (server *APIServer) HandleGetFile (language string) http.HandlerFunc {
 	return func (w http.ResponseWriter, r *http.Request) {
+		utils.EnableCors(&w)
 		params := mux.Vars(r)
 		extension := params["language"]
 		log.WithFields(log.Fields{

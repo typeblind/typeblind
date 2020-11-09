@@ -24,6 +24,7 @@ func AppliedOrgs () []string {
 		"shopify",
 		"yelp",
 		"twitter",
+		"aws",
 	};
 	return AppliedOrgs
 }

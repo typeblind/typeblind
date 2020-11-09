@@ -12,7 +12,7 @@ export const getFileEvent = (language: string) => {
       .then(res => res.json())
       .then(json => {
         console.log(json)
-        dispatch(actions.getFileSuccess(json))
+        dispatch(actions.getFileSuccess(json.data))
       })
       .catch(err => {
         console.log(err)

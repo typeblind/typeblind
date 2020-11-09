@@ -7,16 +7,15 @@ import (
 	"io/ioutil"
 	"github.com/google/go-github/github"
 	"regexp"
-	"fmt"
 )
 
 // GetFile(language string) find random file from certain repository with specified language
-func GetFile(language string) string {
+func GetFile(language string) (string, error) {
 	repo, err := GetRandomRepository(language)
 
 	if err != nil {
 		log.Error(err)
-		return "Error"
+		return "", err
 	}
 
 	contents := repo.GetContentsURL();
@@ -25,7 +24,7 @@ func GetFile(language string) string {
 
 	if err != nil {
 		log.Error(err)
-		return "Error"
+		return "", err
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
@@ -36,7 +35,7 @@ func GetFile(language string) string {
 
 	if err != nil {
 		log.Error(err)
-		return "Errror"
+		return "", err
 	}
 	
 
@@ -45,24 +44,26 @@ func GetFile(language string) string {
 
 	if err != nil {
 		log.Error(err)
-		return "Error"
+		return "", err
 	}
 	
 	// Check for extension
 
 	for i := range data {
-		fmt.Println("CHECK EXTENSION FOR \n")
-		fmt.Println(data[i].GetName())
 		match := checkFileForExtension(language, data[i])
 
 		if match {
-			raw := getRawFile(data[i].GetDownloadURL())
-			fmt.Println(raw)
-			return "Success"
+			raw, getRawErr := getRawFile(data[i].GetDownloadURL())
+			
+			if getRawErr != nil {
+				return "", getRawErr
+			}
+
+			return raw, nil
 		}
 	}
 
-	return "Hello"
+	return "", nil
 }
 
 func checkFileForExtension (language string, file github.RepositoryContent) bool {
@@ -77,22 +78,30 @@ func checkFileForExtension (language string, file github.RepositoryContent) bool
 	return false
 }
 
-func getRawFile (url string) string {
+func getRawFile (url string) (string, error) {
 	resp, err := http.Get(url)
 
 	if err != nil {
-		log.Error(err)
+		log.WithFields(log.Fields{
+			"url": url,
+			"error": err.Error(),
+		}).Error("Error during http request in getRawFile")
+		return "", err
 	}
 
-	if resp.Body != nil{
+	if resp.Body != nil {
 		defer resp.Body.Close()
 	}
 
 	body, readErr := ioutil.ReadAll(resp.Body)
 
 	if readErr != nil {
-		log.Error(err)
+		log.WithFields(log.Fields{
+			"body": resp.Body,
+			"error": readErr.Error(),
+		}).Error("Error during reading response body in getRawFile")
+		return "", err
 	}
 
-	return string(body)
+	return string(body), nil
 }

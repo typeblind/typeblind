@@ -1,21 +1,24 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useRoute } from 'wouter';
 import { RootState } from '../../../../store';
 import { getFileEvent  } from '../../../../store/type/events/getFileEvent';
+import { hljs } from '../../../../utils'
 import Line from './Line';
-declare let hljs: any;
+
 
 export default function Editor() {
   const dispatch = useDispatch()
   const lines = useSelector((state: RootState) => state.typing.lines);
   const codeRef = useRef(null);
+  const [match, params] = useRoute('/type/:language');
   useEffect(() => {
-    dispatch(getFileEvent('go'));
+    dispatch(getFileEvent(params?.language as string));
   }, [])
 
   useEffect(() => {
     console.log(lines)
-    hljs.highlightBlock(codeRef.current)
+    // hljs.hlBlock((codeRef.current as unknown) as HTMLElement)
   }, [lines])
 
   const code = `
@@ -33,7 +36,7 @@ export default function Editor() {
         {
           lines?.length > 0 ? 
           lines.map((line, index) => (
-            <Line line={line} key={index} />
+            <Line line={line} id={index} key={index}/>
           ))
           : null
         }

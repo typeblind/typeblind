@@ -7,8 +7,8 @@ export type LangsStore = {
 }
 
 const initialState: LangsStore = {
-  go: {
-    name: 'GoLang',
+  Go: {
+    name: 'Go',
     color: '#00ACD7',
     extension: '.go',
     description: 'Modern and fast language for back-end'
@@ -30,6 +30,24 @@ const initialState: LangsStore = {
     color: '#F34B7D',
     extension: '.cpp',
     description: 'Garbage',
+  },
+  Rust: {
+    name: "Rust",
+    color: "#EF4A00",
+    extension: ".rs",
+    description: "Language for Robust software"
+  },
+  Swift: {
+    name: "Swift",
+    color: "#FE502D",
+    extension: ".swift",
+    description: "Languge to develop apps for Apple devices",
+  },
+  CSharp: {
+    name:"C#",
+    color: "#2D0076",
+    extension: "C#",
+    description: "Modern language from Microsoft",
   }
 }
 

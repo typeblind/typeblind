@@ -1,14 +1,23 @@
-import React, {FC} from 'react'
-
+import React, {FC, useEffect, useRef} from 'react'
+import { DefaultParams, useLocation, useRoute } from 'wouter';
+import { hljs } from '../../../../utils/'
 type LineProps = {
-  line: string[]
+  line: string[],
+  id: number,
 }
 
 // Line of code
-const Line: FC<LineProps> = ({ line }) => {
+const Line: FC<LineProps> = ({ line, id }) => {
+  const lineRef = useRef(null);
+  const [match, params] = useRoute('/type/:language')
+  
+  useEffect(() => {
+    hljs.hlBlock(document.querySelector(`#codes-${id}`) as HTMLElement)
+  }, [])
+
   return (
-    <div>
-      { line.map(char => <span> {char} </span>) }
+    <div id={`codes-${id}`} className={`hljs ${params?.language}`}>
+      <pre>{line.map(char => <span>{char}</span>)}</pre>
     </div>
   )
 }

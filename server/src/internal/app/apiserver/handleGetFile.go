@@ -19,7 +19,7 @@ func (server *APIServer) HandleGetFile (language string) http.HandlerFunc {
 			"language": extension,
 		}).Warn("SEE QUERY PARAM")
 		log.Info("GETTING FILE")
-		file, getFileErr := github.GetFile("go")
+		file, getFileErr := github.GetFile(extension)
 		log.Warning(file)
 		if getFileErr != nil {
 			w.WriteHeader(http.StatusInternalServerError)

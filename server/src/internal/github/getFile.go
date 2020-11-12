@@ -86,10 +86,6 @@ func GetFile(language string) (string, error) {
 		// utils.ShuffleRepos(files)
 		indexes := utils.Shuffle(len(files))
 
-		log.Info("Files before shuffle")
-		log.Warning(len(files))
-		log.Warning(files[0].name)
-		log.Warning(indexes)
 		for i := range files {
 			index := indexes[i]
 			tmp := files[index]
@@ -98,13 +94,6 @@ func GetFile(language string) (string, error) {
 			files[index] = tmp1
 		}
 
-		log.Info("Files after shuffle")
-		log.Warning(files[0].name)
-
-		for i := range files {
-			log.Info(files[i])
-		}
- 
 		randIndex := utils.GetRandomElement(len(files))
 
 		raw,_ := getRawFile(files[randIndex].code)
@@ -185,14 +174,11 @@ func createFilesArray (repo []github.RepositoryContent, language string) []GhFil
 		}
 	}
 
-	log.Info("Search was completed")
-	log.Info(files)
 	return files
 }
 
 func processDir (dirUrl string, files []GhFile, language string) ([]GhFile, error)  {
 	// Get Contents of Directory
-	log.Info("Getting contents of " + dirUrl)
 	resp, err := http.Get(dirUrl)
 
 	if err != nil {
@@ -226,10 +212,7 @@ func processDir (dirUrl string, files []GhFile, language string) ([]GhFile, erro
 					code: code,
 				}
 
-				log.Warning("APPENDING")
-				log.Warning(len(files))
 				files = append(files, file)
-				log.Warning(files)
 			}
 		} else if data[i].GetSize() == 0 {
 			return processDir(data[i].GetURL(), files, language)

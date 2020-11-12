@@ -76,3 +76,4 @@ server/dist
 docker-compose.yml
 update.sh
 server/run.sh
+server/run-local.sh

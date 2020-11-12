@@ -19,19 +19,14 @@ func (server *APIServer) HandleGetFile (language string) http.HandlerFunc {
 		log.WithFields(log.Fields{
 			"language": extension,
 		}).Warn("SEE QUERY PARAM")
-		log.Info("GETTING FILE")
 		file, getFileErr := github.GetFile(extension)
-		log.Warning(file)
 		if getFileErr != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
 		dbClient := db.Connect()
 		db.SaveFileToCache(dbClient)
 
-		log.Info("SPLIT RAW BY LINES FILE")
 		lines := splitRawByLines(file)
-		log.Info("LINES")
-		log.Warning(lines)
 		result := map[string]interface{}{"data": lines}
 		jsonValue, _ := json.Marshal(result)
 		w.Write(jsonValue)

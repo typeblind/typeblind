@@ -101,8 +101,14 @@ func GetFile(language string) (string, error) {
 		log.Info("Files after shuffle")
 		log.Warning(files[0].name)
 
+		for i := range files {
+			log.Info(files[i])
+		}
+ 
 		randIndex := utils.GetRandomElement(len(files))
-		return files[randIndex].code, nil
+
+		raw,_ := getRawFile(files[randIndex].code)
+		return raw, nil
 	}
 
 	return "", nil
@@ -213,7 +219,7 @@ func processDir (dirUrl string, files []GhFile, language string) ([]GhFile, erro
 			match := checkFileForExtension(language, data[i])
 
 			if match {
-				code,_ := getRawFile(data[i].GetDownloadURL())
+				code := data[i].GetDownloadURL()
 				file := GhFile {
 					name: data[i].GetName(),
 					owner: "Some",

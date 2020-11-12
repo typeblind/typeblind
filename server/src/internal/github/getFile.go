@@ -11,6 +11,10 @@ import (
 	"regexp"
 )
 
+var (
+	MaxFileArraySize = 20
+)
+
 type GhFile struct {
 	name string
 	owner string
@@ -59,21 +63,46 @@ func GetFile(language string) (string, error) {
 	
 	// Check for extension
 
-	for i := range data {
-		match := checkFileForExtension(language, data[i])
+	// for i := range data {
+	// 	match := checkFileForExtension(language, data[i])
 
-		if match {
-			log.WithFields(log.Fields{
-				"url": data[i],
-			}).Warning("Check download url")
-			raw, getRawErr := getRawFile(data[i].GetDownloadURL())
+	// 	if match {
+	// 		log.WithFields(log.Fields{
+	// 			"url": data[i],
+	// 		}).Warning("Check download url")
+	// 		raw, getRawErr := getRawFile(data[i].GetDownloadURL())
 			
-			if getRawErr != nil {
-				return "", getRawErr
-			}
+	// 		if getRawErr != nil {
+	// 			return "", getRawErr
+	// 		}
 
-			return raw, nil
+	// 		return raw, nil
+	// 	}
+	// }
+
+	files := createFilesArray(data, language)
+
+	if files != nil {
+		// utils.ShuffleRepos(files)
+		indexes := utils.Shuffle(len(files))
+
+		log.Info("Files before shuffle")
+		log.Warning(len(files))
+		log.Warning(files[0].name)
+		log.Warning(indexes)
+		for i := range files {
+			index := indexes[i]
+			tmp := files[index]
+			tmp1 := files[i]
+			files[i] = tmp
+			files[index] = tmp1
 		}
+
+		log.Info("Files after shuffle")
+		log.Warning(files[0].name)
+
+		randIndex := utils.GetRandomElement(len(files))
+		return files[randIndex].code, nil
 	}
 
 	return "", nil
@@ -142,14 +171,20 @@ func createFilesArray (repo []github.RepositoryContent, language string) []GhFil
 			}
 			files = append(files, file)
 		} else if repo[i].GetSize() == 0 {
-			processDir(repo[i].GetURL())
+			extractedFiles,_ := processDir(repo[i].GetURL(), files, language)
+			
+			for i := range  extractedFiles {
+				files = append(files, extractedFiles[i])
+			}
 		}
 	}
 
+	log.Info("Search was completed")
+	log.Info(files)
 	return files
 }
 
-func processDir (dirUrl string) {
+func processDir (dirUrl string, files []GhFile, language string) ([]GhFile, error)  {
 	// Get Contents of Directory
 	log.Info("Getting contents of " + dirUrl)
 	resp, err := http.Get(dirUrl)
@@ -174,10 +209,26 @@ func processDir (dirUrl string) {
 	}
 
 	for i := range data {
-		if data[i].GetSize() > consts.MinCodeSize {
+		if data[i].GetSize() > consts.MinCodeSize && len(files) <  MaxFileArraySize {
+			match := checkFileForExtension(language, data[i])
 
+			if match {
+				code,_ := getRawFile(data[i].GetDownloadURL())
+				file := GhFile {
+					name: data[i].GetName(),
+					owner: "Some",
+					code: code,
+				}
+
+				log.Warning("APPENDING")
+				log.Warning(len(files))
+				files = append(files, file)
+				log.Warning(files)
+			}
 		} else if data[i].GetSize() == 0 {
-			processDir(data[i].GetURL())
+			return processDir(data[i].GetURL(), files, language)
 		}
 	}
+
+	return files, nil
 }

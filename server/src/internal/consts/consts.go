@@ -29,3 +29,5 @@ func AppliedOrgs () []string {
 	return AppliedOrgs
 }
 
+// MinCodeSize size of github file content
+const MinCodeSize = 1000;

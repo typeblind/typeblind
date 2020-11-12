@@ -75,3 +75,4 @@ server/dist
 .DS_Store
 docker-compose.yml
 update.sh
+server/run.sh

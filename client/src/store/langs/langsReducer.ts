@@ -7,8 +7,8 @@ export type LangsStore = {
 }
 
 const initialState: LangsStore = {
-  Go: {
-    name: 'Go',
+  go: {
+    name: 'go',
     color: '#00ACD7',
     extension: '.go',
     description: 'Modern and fast language for back-end'

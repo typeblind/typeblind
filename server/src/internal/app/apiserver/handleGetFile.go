@@ -8,6 +8,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/gorilla/mux"
 	"github.com/kletskovg/typecode/server/src/internal/utils"
+	"github.com/kletskovg/typecode/server/src/internal/db"
 )
 
 func (server *APIServer) HandleGetFile (language string) http.HandlerFunc {
@@ -24,6 +25,8 @@ func (server *APIServer) HandleGetFile (language string) http.HandlerFunc {
 		if getFileErr != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
+		dbClient := db.Connect()
+		db.SaveFileToCache(dbClient)
 
 		log.Info("SPLIT RAW BY LINES FILE")
 		lines := splitRawByLines(file)

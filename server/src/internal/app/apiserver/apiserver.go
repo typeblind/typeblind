@@ -45,12 +45,11 @@ func (s *APIServer) configureLogger() error {
 
 func (s *APIServer) configureRouter() {
 	s.router.HandleFunc("/file/{language}", s.HandleGetFile("go"))
-	s.router.HandleFunc("/", s.handleHello())
+	s.router.HandleFunc("/", s.HandleHello())
 }
 
-func (s *APIServer) handleHello() http.HandlerFunc {
+func (s *APIServer) HandleHello() http.HandlerFunc {
 	return func (w http.ResponseWriter, r *http.Request) {
-		go github.GetRandomRepository("JavaScript")
 		w.Write([]byte(("Hello on Hello page")))
 	}
 }

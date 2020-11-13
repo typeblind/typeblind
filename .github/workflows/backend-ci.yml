@@ -18,6 +18,9 @@ jobs:
 
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+        path: go/src/github.com/kletskovg/typecode
 
     - name: Debug
       run: |
@@ -30,6 +33,8 @@ jobs:
       run: |
         cd server
         go get -v -t -d ./...
+      env:
+        GOPATH: /home/runner/work/typecode/typecode
     - name: Build
       run: go build -v .
 

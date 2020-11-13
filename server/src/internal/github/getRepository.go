@@ -38,6 +38,7 @@ func tryToFindRepo(organization string, language string) (*github.Repository, er
 	log.Info(searchQuery)
 	repos, _, err := client.Repositories.List(ctx, organization, nil)
 	if err != nil {
+		log.Error("RATE LIMIT ERROR")
 		log.Error(err.Error())
 		return nil, err
 	} 

@@ -27,6 +27,7 @@ func GetFile(language string) (GhFile, error) {
 	repo, err := GetRandomRepository(language)
 
 	if err != nil {
+		log.Error("GETTING REPO ERROR")
 		log.Error(err)
 		return GhFile{}, err
 	}
@@ -80,7 +81,6 @@ func GetFile(language string) (GhFile, error) {
 		randIndex := utils.GetRandomElement(len(files))
 
 		
-		// raw,_ := getRawFile(files[randIndex].Code)
 		return files[randIndex], nil
 	}
 

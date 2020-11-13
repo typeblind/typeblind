@@ -81,7 +81,6 @@ func GetFile(language string) (GhFile, error) {
 		randIndex := utils.GetRandomElement(len(files))
 
 		
-		// raw,_ := getRawFile(files[randIndex].Code)
 		return files[randIndex], nil
 	}
 

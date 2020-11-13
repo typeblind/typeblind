@@ -49,9 +49,13 @@ func processFile(extension string) []byte {
 		log.Info("GIHUB FILE IN PROCESS FILE")
 		log.Info(cachedFile)
 		
-		if htmlStr, ok := cachedFile["htmlUrl"].(string); ok {
-			file.Code = htmlStr
-		}
+		// if htmlStr, ok := cachedFile["htmlUrl"].(string); ok {
+		// 	file.Code = htmlStr
+		// }
+
+		htmlStr, _ := cachedFile["htmlUrl"].(string)
+		raw, _ := github.GetRawFile(string(htmlStr))
+		file.Code = raw
 
 		if name, ok := cachedFile["language"].(string); ok {
 			file.Name = name
@@ -60,15 +64,18 @@ func processFile(extension string) []byte {
 		if owner, ok := cachedFile["rawUrl"].(string); ok {
 			file.Owner = owner
 		}
+		
 		log.Info(file)
-	} 
-	raw, _ := github.GetRawFile(file.Code)
+		} else {
+			// raw, _ := github.GetRawFile(ghFile.Code)
+			file.Code = ghFile.Code
+		}
 
-	lines := splitRawByLines(raw)
+	lines := splitRawByLines(file.Code)
 	result := map[string]interface{}{
 		"data": lines,
-		"file": ghFile.Name,
-		"owner": ghFile.Owner,
+		"file": file.Name,
+		"owner": file.Owner,
 	}
 	jsonValue, _ := json.Marshal(result)
 	return jsonValue

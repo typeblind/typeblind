@@ -6,14 +6,25 @@ import (
 	"os"
 	"context"
 	"time"
+	"io/ioutil"
 	log "github.com/sirupsen/logrus"
 )
 
 var instance *mongo.Client
 
-var DB_CONNECTION = os.Getenv("DB_CONNECTION")
+var DB_CONNECTION string
 
 func Connect() *mongo.Client {
+	if os.Getenv("DB_CONNECTION")  == "" {
+		data,_ := ioutil.ReadFile("config.txt")
+		log.Info(string(data))
+		log.Info("DB:")
+		log.Info(DB_CONNECTION)
+		DB_CONNECTION = string(data)
+	} else {
+		DB_CONNECTION = os.Getenv("DB_CONNECTION")
+	}
+	
 	if instance == nil {
 		log.Info("Starting DB connection")
 		ctx, cancel := context.WithTimeout(context.TODO(), 10*time.Second)

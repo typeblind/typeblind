@@ -155,6 +155,7 @@ github.com/kletskovg/typecode v0.0.0-20201106220042-89915115529f h1:cj7/XNkZ8R49
 github.com/kletskovg/typecode v0.0.0-20201106230257-81689100d60e h1:2+MLKALDc/PS43Uf0HvGk0xHyzzOT4jkgthCZTdXHBo=
 github.com/kletskovg/typecode v0.0.0-20201107004555-df6e1d54c539 h1:hnVjSnizxxN1DPQZYRbXnORKRxUrm3dNcczKYuYLbEY=
 github.com/kletskovg/typecode v0.0.0-20201108005208-d9f1e0084277 h1:3M5rDfYEy492YxfiHdBG2gvF4QWLAoISV5SH1nkozrs=
+github.com/kletskovg/typecode v0.0.0-20201112203225-a598b6a354fb h1:hDnlGUWDsqTYeYaVSO+SNEs/kw/GxLIW4tK/lV7a6fs=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/konsorten/go-windows-terminal-sequences v1.0.2/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=

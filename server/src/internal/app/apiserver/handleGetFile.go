@@ -23,10 +23,11 @@ func (server *APIServer) HandleGetFile (language string) http.HandlerFunc {
 		if getFileErr != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
-		dbClient := db.Connect()
-		db.SaveFileToCache(dbClient)
+		raw, _ := github.GetRawFile(file.Code)
 
-		lines := splitRawByLines(file)
+		dbClient := db.Connect()
+		db.SaveFileToCache(dbClient, file)
+		lines := splitRawByLines(raw)
 		result := map[string]interface{}{"data": lines}
 		jsonValue, _ := json.Marshal(result)
 		w.Write(jsonValue)

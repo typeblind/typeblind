@@ -17,9 +17,6 @@ var DB_CONNECTION string
 func Connect() *mongo.Client {
 	if os.Getenv("DB_CONNECTION")  == "" {
 		data,_ := ioutil.ReadFile("config.txt")
-		log.Info(string(data))
-		log.Info("DB:")
-		log.Info(DB_CONNECTION)
 		DB_CONNECTION = string(data)
 	} else {
 		DB_CONNECTION = os.Getenv("DB_CONNECTION")

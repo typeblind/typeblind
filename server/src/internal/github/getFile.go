@@ -27,6 +27,7 @@ func GetFile(language string) (GhFile, error) {
 	repo, err := GetRandomRepository(language)
 
 	if err != nil {
+		log.Error("GETTING REPO ERROR")
 		log.Error(err)
 		return GhFile{}, err
 	}

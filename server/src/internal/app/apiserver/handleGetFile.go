@@ -16,21 +16,13 @@ func (server *APIServer) HandleGetFile (language string) http.HandlerFunc {
 		utils.EnableCors(&w)
 		params := mux.Vars(r)
 		extension := params["language"]
+
 		log.WithFields(log.Fields{
 			"language": extension,
 		}).Warn("SEE QUERY PARAM")
-		file, getFileErr := github.GetFile(extension)
-		if getFileErr != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-		}
-		raw, _ := github.GetRawFile(file.Code)
 
-		dbClient := db.Connect()
-		db.SaveFileToCache(dbClient, file)
-		lines := splitRawByLines(raw)
-		result := map[string]interface{}{"data": lines}
-		jsonValue, _ := json.Marshal(result)
-		w.Write(jsonValue)
+		file := processFile(extension)
+		w.Write(file)
 	}
 }
 
@@ -44,4 +36,40 @@ func splitRawByLines (raw string) [][]string {
 	}
 
   return lines
+}
+
+func processFile(extension string) []byte {
+	var file = github.GhFile{}
+	
+	ghFile, getFileErr := github.GetFile(extension)
+	
+	if getFileErr != nil {
+		dbClient := db.Connect()
+		cachedFile := db.ExtractFromCache(dbClient, "go")
+		log.Info("GIHUB FILE IN PROCESS FILE")
+		log.Info(cachedFile)
+		
+		if htmlStr, ok := cachedFile["htmlUrl"].(string); ok {
+			file.Code = htmlStr
+		}
+
+		if name, ok := cachedFile["language"].(string); ok {
+			file.Name = name
+		}
+
+		if owner, ok := cachedFile["rawUrl"].(string); ok {
+			file.Owner = owner
+		}
+		log.Info(file)
+	} 
+	raw, _ := github.GetRawFile(file.Code)
+
+	lines := splitRawByLines(raw)
+	result := map[string]interface{}{
+		"data": lines,
+		"file": ghFile.Name,
+		"owner": ghFile.Owner,
+	}
+	jsonValue, _ := json.Marshal(result)
+	return jsonValue
 }

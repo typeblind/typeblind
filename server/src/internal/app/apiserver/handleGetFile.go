@@ -8,6 +8,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/gorilla/mux"
 	"github.com/kletskovg/typecode/server/src/internal/utils"
+	"github.com/kletskovg/typecode/server/src/internal/db"
 )
 
 func (server *APIServer) HandleGetFile (language string) http.HandlerFunc {
@@ -18,17 +19,15 @@ func (server *APIServer) HandleGetFile (language string) http.HandlerFunc {
 		log.WithFields(log.Fields{
 			"language": extension,
 		}).Warn("SEE QUERY PARAM")
-		log.Info("GETTING FILE")
 		file, getFileErr := github.GetFile(extension)
-		log.Warning(file)
 		if getFileErr != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
+		raw, _ := github.GetRawFile(file.Code)
 
-		log.Info("SPLIT RAW BY LINES FILE")
-		lines := splitRawByLines(file)
-		log.Info("LINES")
-		log.Warning(lines)
+		dbClient := db.Connect()
+		db.SaveFileToCache(dbClient, file)
+		lines := splitRawByLines(raw)
 		result := map[string]interface{}{"data": lines}
 		jsonValue, _ := json.Marshal(result)
 		w.Write(jsonValue)

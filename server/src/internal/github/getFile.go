@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"github.com/google/go-github/github"
 	"github.com/kletskovg/typecode/server/src/internal/utils"
+	// "github.com/kletskovg/typecode/server/src/internal/db"
 	"regexp"
 )
 
@@ -16,18 +17,18 @@ var (
 )
 
 type GhFile struct {
-	name string
-	owner string
-	code 	string
+	Name string
+	Owner string
+	Code 	string
 }
 
 // GetFile(language string) find random file from certain repository with specified language
-func GetFile(language string) (string, error) {
+func GetFile(language string) (GhFile, error) {
 	repo, err := GetRandomRepository(language)
 
 	if err != nil {
 		log.Error(err)
-		return "", err
+		return GhFile{}, err
 	}
 
 	contents := repo.GetContentsURL();
@@ -36,7 +37,7 @@ func GetFile(language string) (string, error) {
 
 	if err != nil {
 		log.Error(err)
-		return "", err
+		return GhFile{}, err
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
@@ -47,7 +48,7 @@ func GetFile(language string) (string, error) {
 
 	if err != nil {
 		log.Error(err)
-		return "", err
+		return GhFile{}, err
 	}
 	
 
@@ -56,29 +57,11 @@ func GetFile(language string) (string, error) {
 
 	if err != nil {
 		log.Error(err)
-		return "", err
+		return GhFile{}, err
 	}
 	
 	utils.ShuffleRepos(data)
 	
-	// Check for extension
-
-	// for i := range data {
-	// 	match := checkFileForExtension(language, data[i])
-
-	// 	if match {
-	// 		log.WithFields(log.Fields{
-	// 			"url": data[i],
-	// 		}).Warning("Check download url")
-	// 		raw, getRawErr := getRawFile(data[i].GetDownloadURL())
-			
-	// 		if getRawErr != nil {
-	// 			return "", getRawErr
-	// 		}
-
-	// 		return raw, nil
-	// 	}
-	// }
 
 	files := createFilesArray(data, language)
 
@@ -86,10 +69,6 @@ func GetFile(language string) (string, error) {
 		// utils.ShuffleRepos(files)
 		indexes := utils.Shuffle(len(files))
 
-		log.Info("Files before shuffle")
-		log.Warning(len(files))
-		log.Warning(files[0].name)
-		log.Warning(indexes)
 		for i := range files {
 			index := indexes[i]
 			tmp := files[index]
@@ -98,20 +77,14 @@ func GetFile(language string) (string, error) {
 			files[index] = tmp1
 		}
 
-		log.Info("Files after shuffle")
-		log.Warning(files[0].name)
-
-		for i := range files {
-			log.Info(files[i])
-		}
- 
 		randIndex := utils.GetRandomElement(len(files))
 
-		raw,_ := getRawFile(files[randIndex].code)
-		return raw, nil
+		
+		// raw,_ := getRawFile(files[randIndex].Code)
+		return files[randIndex], nil
 	}
 
-	return "", nil
+	return GhFile{}, nil
 }
 
 func checkFileForExtension (language string, file github.RepositoryContent) bool {
@@ -126,7 +99,7 @@ func checkFileForExtension (language string, file github.RepositoryContent) bool
 	return false
 }
 
-func getRawFile (url string) (string, error) {
+func GetRawFile (url string) (string, error) {
 	resp, err := http.Get(url)
 
 	if err != nil {
@@ -168,12 +141,12 @@ func createFilesArray (repo []github.RepositoryContent, language string) []GhFil
 		match := checkFileForExtension(language, repo[i])
 
 		if match && repo[i].GetSize() > consts.MinCodeSize {
-			code,_ := getRawFile(repo[i].GetDownloadURL())
+			code,_ := GetRawFile(repo[i].GetDownloadURL())
 
 			file := GhFile {
-				name: repo[i].GetName(),
-				owner: "Some",
-				code: code,
+				Name: repo[i].GetName(),
+				Owner: "Some",
+				Code: code,
 			}
 			files = append(files, file)
 		} else if repo[i].GetSize() == 0 {
@@ -185,14 +158,11 @@ func createFilesArray (repo []github.RepositoryContent, language string) []GhFil
 		}
 	}
 
-	log.Info("Search was completed")
-	log.Info(files)
 	return files
 }
 
 func processDir (dirUrl string, files []GhFile, language string) ([]GhFile, error)  {
 	// Get Contents of Directory
-	log.Info("Getting contents of " + dirUrl)
 	resp, err := http.Get(dirUrl)
 
 	if err != nil {
@@ -221,15 +191,12 @@ func processDir (dirUrl string, files []GhFile, language string) ([]GhFile, erro
 			if match {
 				code := data[i].GetDownloadURL()
 				file := GhFile {
-					name: data[i].GetName(),
-					owner: "Some",
-					code: code,
+					Name: data[i].GetName(),
+					Owner: "Some",
+					Code: code,
 				}
 
-				log.Warning("APPENDING")
-				log.Warning(len(files))
 				files = append(files, file)
-				log.Warning(files)
 			}
 		} else if data[i].GetSize() == 0 {
 			return processDir(data[i].GetURL(), files, language)

@@ -38,9 +38,9 @@ jobs:
       run: |
         pwd
         ls -la
-        ls -la go
-        cd $(pwd)/go/src
+        cd $(pwd)/server
         go get -v -t -d ./...
+      # ls -la go
       env:
         GOPATH: /home/runner/work/typecode/go
     # - name: Build

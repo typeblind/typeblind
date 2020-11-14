@@ -33,7 +33,8 @@ jobs:
       run: |
         pwd
         ls -la
-        cd $(pwd)/server
+        ls -la go
+        cd $(pwd)/go/typecode/server
         go get -v -t -d ./...
       env:
         GOPATH: /home/runner/work/typecode/go

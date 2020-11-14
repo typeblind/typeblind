@@ -29,17 +29,20 @@ jobs:
         echo ${GOROOT}
       
 
-    - name: Get dependencies
+    - name: Pack Go to Docker 
       run: |
-        pwd
-        ls -la
-        ls -la go
-        cd $(pwd)/go/src
-        go get -v -t -d ./...
-      env:
-        GOPATH: /home/runner/work/typecode/go
-    - name: Build
-      run: go build -v .
+        docker build -t ${{secrets.TYPECODE_BACKEND_IMAGE}} .
+    # - name: Get dependencies
+    #   run: |
+    #     pwd
+    #     ls -la
+    #     ls -la go
+    #     cd $(pwd)/go/src
+    #     go get -v -t -d ./...
+    #   env:
+    #     GOPATH: /home/runner/work/typecode/go
+    # - name: Build
+    #   run: go build -v .
 
-    - name: Test
-      run: go test -v .
+    # - name: Test
+    #   run: go test -v .

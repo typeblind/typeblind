@@ -32,6 +32,7 @@ jobs:
     - name: Get dependencies
       run: |
         pwd
+        ls -la
         cd $(pwd)/server
         go get -v -t -d ./...
       env:

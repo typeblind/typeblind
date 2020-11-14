@@ -34,7 +34,7 @@ jobs:
         pwd
         ls -la
         ls -la go
-        cd $(pwd)/go/typecode/server
+        cd $(pwd)/go/src
         go get -v -t -d ./...
       env:
         GOPATH: /home/runner/work/typecode/go

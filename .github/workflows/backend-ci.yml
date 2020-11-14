@@ -32,7 +32,7 @@ jobs:
     - name: Get dependencies
       run: |
         pwd
-        cd server
+        cd $(pwd)/server
         go get -v -t -d ./...
       env:
         GOPATH: /home/runner/work/typecode/go

@@ -27,6 +27,11 @@ jobs:
         username: ${{secrets.DOCKER_LOGIN}}
         password: ${{ secrets.DOCKER_PASSWORD }}
         context: $(pwd)/go/src/github.com/kletskovg/typecode/server/db_service/
+      run:
+        |
+        ls -la 
+        ls -la $(pwd)/go/src/github.com/kletskovg/typecode/server/
+        ls -la $(pwd)/go/src/github.com/kletskovg/typecode/server/db_service
       env:
         GOPATH: /home/runner/work/typecode/go
 

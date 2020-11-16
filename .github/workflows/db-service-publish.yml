@@ -1,4 +1,4 @@
-name: Db Service Deploy
+name: Typecode Db Service Deploy
 
 on:
   push:

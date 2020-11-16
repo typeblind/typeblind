@@ -1,9 +1,10 @@
-name: Go
+name: Typecode backend
 
 on:
   push:
     branches: [develop, master]
-
+    paths:
+      - 'server/src/**'
 jobs:
 
   build:

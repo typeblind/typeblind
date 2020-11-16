@@ -5,6 +5,7 @@ on:
     branches: [develop, master]
     paths:
       - 'server/db_service'
+      - '.github/**'
 
 jobs:
   build:

@@ -38,7 +38,7 @@ jobs:
       run: |
         pwd
         ls -la
-        cd $(pwd)/go/src/github.com/kletskovg/typecode
+        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/src
         ls -la
         go mod download -x
       # ls -la go

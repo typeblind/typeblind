@@ -46,6 +46,10 @@ jobs:
         GOPATH: /home/runner/work/typecode/go
     - name: Build
       run: go build -v .
+      env:
+        GOPATH: /home/runner/work/typecode/go
 
     - name: Test
       run: go test -v ./...
+      env:
+        GOPATH: /home/runner/work/typecode/go

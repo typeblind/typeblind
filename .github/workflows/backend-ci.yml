@@ -38,7 +38,8 @@ jobs:
       run: |
         pwd
         ls -la
-        cd $(pwd)/go/src
+        cd $(pwd)/go
+        ls -la
         go mod download -x
       # ls -la go
       env:

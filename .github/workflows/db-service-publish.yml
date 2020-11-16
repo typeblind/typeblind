@@ -20,18 +20,13 @@ jobs:
         fetch-depth: 1
         path: go/src/github.com/kletskovg/typecode
 
-    # - name: Publish Server to Registry
-    #   uses: elgohr/Publish-Docker-Github-Action@master
-    #   with:
-    #     name: ${{ secrets.TYPECODE_DB_IMAGE }}
-    #     username: ${{secrets.DOCKER_LOGIN}}
-    #     password: ${{ secrets.DOCKER_PASSWORD }}
-    #     context: $(pwd)/go/src/github.com/kletskovg/typecode/server/db_service/
-    #   run:
-    #     |
-    #     ls -la 
-    #     ls -la $(pwd)/go/src/github.com/kletskovg/typecode/server/
-    #     ls -la $(pwd)/go/src/github.com/kletskovg/typecode/server/db_service
+    - name: Publish Server to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: ${{ secrets.TYPECODE_DB_IMAGE }}
+        username: ${{secrets.DOCKER_LOGIN}}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        context: go/src/github.com/kletskovg/typecode/server/db_service/
     - name: Build
       run:
         |

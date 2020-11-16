@@ -53,6 +53,9 @@ jobs:
         GOPATH: /home/runner/work/typecode/go
 
     - name: Test
-      run: go test -v ./...
+      run: 
+        |
+        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/src
+        go test -v ./...
       env:
         GOPATH: /home/runner/work/typecode/go

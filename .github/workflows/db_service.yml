@@ -2,7 +2,7 @@ name: Db Service
 
 on:
   push:
-    branches: [develop]
+    branches: [develop, master]
     paths:
       - 'server/db_service'
 

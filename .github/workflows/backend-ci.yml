@@ -1,0 +1,61 @@
+name: Go
+
+on:
+  push:
+    branches: [develop, master]
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Set up Go 1.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.14.2
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+        path: go/src/github.com/kletskovg/typecode
+
+    - name: Debug
+      run: |
+        pwd
+        echo ${GOPATH}
+        echo ${GOROOT}
+      
+
+    # - name: Pack Go to Docker 
+    #   run: |
+    #     cd server
+    #     docker build -t ${{secrets.TYPECODE_BACKEND_IMAGE}} .
+
+    - name: Get dependencies
+      run: |
+        pwd
+        ls -la
+        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/src
+        ls -la
+        go mod download -x
+      # ls -la go
+      env:
+        GOPATH: /home/runner/work/typecode/go
+    - name: Build
+      run: 
+        |
+        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/src
+        go build -v .
+      env:
+        GOPATH: /home/runner/work/typecode/go
+
+    - name: Test
+      run: 
+        |
+        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/src
+        go test -v ./...
+      env:
+        GOPATH: /home/runner/work/typecode/go

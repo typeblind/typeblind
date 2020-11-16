@@ -45,7 +45,10 @@ jobs:
       env:
         GOPATH: /home/runner/work/typecode/go
     - name: Build
-      run: go build -v .
+      run: 
+        |
+        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/src
+        go build -v .
       env:
         GOPATH: /home/runner/work/typecode/go
 

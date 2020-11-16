@@ -44,8 +44,8 @@ jobs:
       # ls -la go
       env:
         GOPATH: /home/runner/work/typecode/go
-    # - name: Build
-    #   run: go build -v .
+    - name: Build
+      run: go build -v .
 
-    # - name: Test
-    #   run: go test -v .
+    - name: Test
+      run: go test -v ./...

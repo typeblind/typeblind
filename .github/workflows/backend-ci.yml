@@ -38,8 +38,7 @@ jobs:
       run: |
         pwd
         ls -la
-        ls -la $(GOPATH)
-        cd $(pwd)/server
+        cd $(pwd)/go/src
         go mod download -x
       # ls -la go
       env:

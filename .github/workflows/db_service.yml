@@ -2,8 +2,9 @@ name: Go
 
 on:
   push:
-    branches: [develop, master]
-
+    branches: [develop]
+    paths:
+      - 'server/db_service'
 jobs:
 
   build:
@@ -30,14 +31,14 @@ jobs:
 
     - name: Get dependencies
       run: |
-        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/src
+        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/db_service/src
         go mod download -x
       env:
         GOPATH: /home/runner/work/typecode/go
     - name: Build
       run: 
         |
-        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/src
+        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/db_service/src
         go build -v .
       env:
         GOPATH: /home/runner/work/typecode/go
@@ -45,7 +46,7 @@ jobs:
     - name: Test
       run: 
         |
-        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/src
+        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/db_service/src
         go test -v ./...
       env:
         GOPATH: /home/runner/work/typecode/go

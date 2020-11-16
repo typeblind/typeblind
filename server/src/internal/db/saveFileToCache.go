@@ -29,23 +29,23 @@ func SaveFileToCache(client *mongo.Client, file github.GhFile) {
 		log.Info(res)
 	} else {
 		jsonSchema := bson.M{
-			"bsonType": "object",
-			"required": []string{
-				"language", 
-				"htmlUrl", 
-				"rawUrl",
+		"bsonType": "object",
+		"required": []string{
+			"language", 
+			"htmlUrl", 
+			"rawUrl",
+		},
+		"properties": bson.M{
+			"language": bson.M{
+				"bsonType": "string",
 			},
-			"properties": bson.M{
-				"language": bson.M{
-					"bsonType": "string",
-				},
-				"htmlUrl": bson.M{
-					"bsonType": "string",
-				},
-				"rawUrl": bson.M{
-					"bsonType": "string",
-				},
+			"htmlUrl": bson.M{
+				"bsonType": "string",
 			},
+			"rawUrl": bson.M{
+				"bsonType": "string",
+			},
+		},
 		}
 
 		validator := bson.M{

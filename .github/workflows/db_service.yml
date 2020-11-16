@@ -1,10 +1,11 @@
-name: Db Service
+name: Typecode Db Service
 
 on:
   push:
-    branches: [develop]
+    branches: [develop, master]
     paths:
       - 'server/db_service'
+      - '.github/**'
 
 jobs:
   build:

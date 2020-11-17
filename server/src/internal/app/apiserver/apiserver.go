@@ -44,7 +44,7 @@ func (s *APIServer) configureLogger() error {
 }
 
 func (s *APIServer) configureRouter() {
-	s.router.HandleFunc("/file/{language}", s.HandleGetFile("go"))
+	s.router.HandleFunc("/file/{language}/{extension}", s.HandleGetFile("go"))
 	s.router.HandleFunc("/", s.HandleHello())
 }
 

@@ -4,11 +4,11 @@ import * as  actions from '../actions';
 
 // import ICourse from '../../../interfaces/ICourse';
 
-export const getFileEvent = (language: string) => {
+export const getFileEvent = (language: string, extension: string) => {
   return async (dispatch: Dispatch<any>) => {
     dispatch(actions.getFilePending());
 
-    fetch(`${API_URL}/file/${language}`)
+    fetch(`${API_URL}/file/${language}/${extension}`)
       .then(res => res.json())
       .then(json => {
         console.log(json)

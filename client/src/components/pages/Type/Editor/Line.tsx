@@ -9,7 +9,7 @@ type LineProps = {
 // Line of code
 const Line: FC<LineProps> = ({ line, id }) => {
   const lineRef = useRef(null);
-  const [match, params] = useRoute('/type/:language')
+  const [match, params] = useRoute('/type/:language/:extension')
   
   useEffect(() => {
     hljs.hlBlock(document.querySelector(`#codes-${id}`) as HTMLElement)

@@ -11,9 +11,9 @@ export default function Editor() {
   const dispatch = useDispatch()
   const lines = useSelector((state: RootState) => state.typing.lines);
   const codeRef = useRef(null);
-  const [match, params] = useRoute('/type/:language');
+  const [match, params] = useRoute('/type/:language/:extension');
   useEffect(() => {
-    dispatch(getFileEvent(params?.language as string));
+    dispatch(getFileEvent(params?.language as string, params?.extension as string));
   }, [])
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function Editor() {
 
   return (
     <>
-      <div id="#codes" className={"go"} ref={codeRef}>
+      <div id="#codes" className={params?.language} ref={codeRef}>
         {
           lines?.length > 0 ? 
           lines.map((line, index) => (

@@ -148,6 +148,7 @@ github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+o
 github.com/klauspost/compress v1.9.5 h1:U+CaK85mrNNb4k8BNOfgJtJ/gr6kswUCFj6miSzVC6M=
 github.com/klauspost/compress v1.9.5/go.mod h1:RyIbtBH6LamlWaDj8nUwkbUhJ87Yi3uG0guNDohfE1A=
 github.com/kletskovg/typecode v0.0.0-20201116182726-f18c83eabeec h1:Vp5+J6KvlDQX5/qHhje2zYNNJAHy4IifebIYg/BUJcY=
+github.com/kletskovg/typecode v0.0.0-20201116220607-1fa5581d10b2 h1:woGOmL089nnSGn34KU5IL6gP4olPzFZMiT9wUbaFmBI=
 github.com/kletskovg/typecode/server/src v0.0.0-20201116182726-f18c83eabeec h1:2GHpc+3e7fzKeh3XKMoQzgp8bPU9XaTPaqzGrmxU+MA=
 github.com/kletskovg/typecode/server/src v0.0.0-20201116182726-f18c83eabeec/go.mod h1:EEo0YxQdjFma+G+YXAbGA4hdWYliSHo74r0nvj8Ub0w=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=

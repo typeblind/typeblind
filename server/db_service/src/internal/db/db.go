@@ -10,6 +10,13 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+type File struct {
+	Name string
+	Code [][]string
+	Owner string
+	Language string
+}
+
 func Connect() *mongo.Client {
 	
 	var DB_CONNECTION string
@@ -30,5 +37,6 @@ func Connect() *mongo.Client {
 	log.Info("Successfully connected")
 	log.Info(client)
 
+	go clearCache(client)
 	return client
 }

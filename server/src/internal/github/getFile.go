@@ -23,7 +23,8 @@ type GhFile struct {
 }
 
 // GetFile(language string) find random file from certain repository with specified language
-func GetFile(language string) (GhFile, error) {
+func GetFile(language string, languageExtension string) (GhFile, error) {
+	log.Info("GETTIG REPO WITH LANGUAGE " + language)
 	repo, err := GetRandomRepository(language)
 
 	if err != nil {
@@ -64,7 +65,7 @@ func GetFile(language string) (GhFile, error) {
 	utils.ShuffleRepos(data)
 	
 
-	files := createFilesArray(data, language)
+	files := createFilesArray(data, languageExtension)
 
 	if files != nil {
 		// utils.ShuffleRepos(files)
@@ -87,13 +88,13 @@ func GetFile(language string) (GhFile, error) {
 	return GhFile{}, nil
 }
 
-func checkFileForExtension (language string, file github.RepositoryContent) bool {
+func checkFileForExtension (findedFileExtension string, file github.RepositoryContent) bool {
 	filename := file.GetName()
 	var re = regexp.MustCompile(`(?m)(?:\.([^.]+))?$`) // RegExp which finds file extension
 	extension := string(re.Find([]byte(filename)))
 	// If length of extension if less then 0 it means no matches
 	if len(extension) > 0 {
-    return language == extension[1:]
+    return findedFileExtension == extension[1:]
   } 
 	
 	return false
@@ -127,7 +128,7 @@ func GetRawFile (url string) (string, error) {
 	return string(body), nil
 }
 
-func createFilesArray (repo []github.RepositoryContent, language string) []GhFile {
+func createFilesArray (repo []github.RepositoryContent, fileExtension string) []GhFile {
 	var files []GhFile
 	for i := range repo {
 		log.WithFields(log.Fields{
@@ -138,11 +139,13 @@ func createFilesArray (repo []github.RepositoryContent, language string) []GhFil
 			break
 		}
 
-		match := checkFileForExtension(language, repo[i])
+		match := checkFileForExtension(fileExtension, repo[i])
+
+		
 
 		if match && repo[i].GetSize() > consts.MinCodeSize {
 			code,_ := GetRawFile(repo[i].GetDownloadURL())
-
+		
 			file := GhFile {
 				Name: repo[i].GetName(),
 				Owner: "Some",
@@ -150,7 +153,7 @@ func createFilesArray (repo []github.RepositoryContent, language string) []GhFil
 			}
 			files = append(files, file)
 		} else if repo[i].GetSize() == 0 {
-			extractedFiles,_ := processDir(repo[i].GetURL(), files, language)
+			extractedFiles,_ := processDir(repo[i].GetURL(), files, fileExtension)
 			
 			for i := range  extractedFiles {
 				files = append(files, extractedFiles[i])
@@ -161,7 +164,7 @@ func createFilesArray (repo []github.RepositoryContent, language string) []GhFil
 	return files
 }
 
-func processDir (dirUrl string, files []GhFile, language string) ([]GhFile, error)  {
+func processDir (dirUrl string, files []GhFile, fileExtension string) ([]GhFile, error)  {
 	// Get Contents of Directory
 	resp, err := http.Get(dirUrl)
 
@@ -186,22 +189,24 @@ func processDir (dirUrl string, files []GhFile, language string) ([]GhFile, erro
 
 	for i := range data {
 		if data[i].GetSize() > consts.MinCodeSize && len(files) <  MaxFileArraySize {
-			match := checkFileForExtension(language, data[i])
-
+			match := checkFileForExtension(fileExtension, data[i])
+			
 			if match {
 				code := data[i].GetDownloadURL()
+				raw,_ := GetRawFile(code)
 				file := GhFile {
 					Name: data[i].GetName(),
 					Owner: "Some",
-					Code: code,
+					Code: raw,
 				}
 
 				files = append(files, file)
 			}
 		} else if data[i].GetSize() == 0 {
-			return processDir(data[i].GetURL(), files, language)
+			return processDir(data[i].GetURL(), files, fileExtension)
 		}
 	}
 
 	return files, nil
 }
+

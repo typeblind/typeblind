@@ -11,17 +11,18 @@ import (
 	"github.com/kletskovg/typecode/server/src/internal/db"
 )
 
-func (server *APIServer) HandleGetFile (language string) http.HandlerFunc {
+func (server *APIServer) HandleGetFile () http.HandlerFunc {
 	return func (w http.ResponseWriter, r *http.Request) {
 		utils.EnableCors(&w)
 		params := mux.Vars(r)
-		extension := params["language"]
+		language := params["language"]
+		extension := params["extension"]
 
 		log.WithFields(log.Fields{
-			"language": extension,
+			"language": language,
 		}).Warn("SEE QUERY PARAM")
 
-		file := processFile(extension)
+		file := processFile(language, extension)
 		w.Write(file)
 	}
 }
@@ -38,20 +39,16 @@ func splitRawByLines (raw string) [][]string {
   return lines
 }
 
-func processFile(extension string) []byte {
+func processFile(language string, extension string) []byte {
 	var file = github.GhFile{}
 	
-	ghFile, getFileErr := github.GetFile(extension)
+	ghFile, getFileErr := github.GetFile(language, extension)
 	
 	if getFileErr != nil {
 		dbClient := db.Connect()
 		cachedFile := db.ExtractFromCache(dbClient, "go")
 		log.Info("GIHUB FILE IN PROCESS FILE")
 		log.Info(cachedFile)
-		
-		// if htmlStr, ok := cachedFile["htmlUrl"].(string); ok {
-		// 	file.Code = htmlStr
-		// }
 
 		htmlStr, _ := cachedFile["htmlUrl"].(string)
 		raw, _ := github.GetRawFile(string(htmlStr))
@@ -67,7 +64,6 @@ func processFile(extension string) []byte {
 		
 		log.Info(file)
 		} else {
-			// raw, _ := github.GetRawFile(ghFile.Code)
 			file.Code = ghFile.Code
 		}
 

@@ -8,7 +8,6 @@ import (
 	log "github.com/sirupsen/logrus"
 	"context"
 	"math/rand"
-	"encoding/json"
 )
 
 func FindFile(client *mongo.Client, language string) {

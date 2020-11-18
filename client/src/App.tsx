@@ -9,7 +9,7 @@ function App() {
     <>
       <Switch>
         <Route path="/" component={() => <HomePage />} >  </Route>
-        <Route path="/type/:name" component={() => <TypePage />} />
+        <Route path="/type/:name/:extension" component={() => <TypePage />} />
         <Route path="/:rest*">
           <Redirect to={'/'} />
         </Route>

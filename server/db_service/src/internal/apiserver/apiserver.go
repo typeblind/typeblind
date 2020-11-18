@@ -15,20 +15,20 @@ import (
 )
 
 type APIServer struct{
-	config *Config
-	logger *logrus.Logger
-	router *mux.Router
-	dbClient *mongo.Client
+	Config *Config
+	Logger *logrus.Logger
+	Router *mux.Router
+	DbClient *mongo.Client
 }
 
 func New(config *Config) *APIServer {
 	client := db.Connect()
 
 	return &APIServer{
-		config: config,
-		logger: logrus.New(),
-		router: mux.NewRouter(),
-		dbClient: client,
+		Config: config,
+		Logger: logrus.New(),
+		Router: mux.NewRouter(),
+		DbClient: client,
 	}
 }
 
@@ -39,23 +39,24 @@ func (s *APIServer) Start() error {
 
 	s.configureRouter()
 
-	s.logger.Info("starting api server")
-	return http.ListenAndServe(s.config.BindAddr, s.router)
+	s.Logger.Info("starting api server")
+	return http.ListenAndServe(s.Config.BindAddr, s.Router)
 }
 
 func (s *APIServer) configureLogger() error {
-	level, err := logrus.ParseLevel(s.config.LogLevel)
+	level, err := logrus.ParseLevel(s.Config.LogLevel)
 	if err != nil {
 		return err
 	}
 
-	s.logger.SetLevel(level)
+	s.Logger.SetLevel(level)
 	return nil
 }
 
 func (s *APIServer) configureRouter() {
 	// s.router.HandleFunc("/file/{language}", s.HandleGetFile("go"))
-	s.router.HandleFunc("/", s.HandleHello())
-	s.router.HandleFunc("/find/{language}", s.HandleFind())
+	s.Router.HandleFunc("/", s.HandleHello())
+	s.Router.HandleFunc("/find/{language}", s.HandleFind())
+	s.Router.HandleFunc("/insert", s.HandleInsert()).Methods(http.MethodPost)
 }
 

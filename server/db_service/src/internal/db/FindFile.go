@@ -25,12 +25,10 @@ func FindFile(client *mongo.Client, language string) {
 	if err = cursor.All(context.TODO(), &results); err != nil {
 		log.Fatal(err)
 	}
-	// for _, result := range results {
-	// 	fmt.Println(result)
-	// }
-	randIndex := getRandomElement(len(results))
-	var findedFile interface{}
-	err = bson.Unmarshal(results, &findedFile)
+	
+	// randIndex := getRandomElement(len(results))
+	// var findedFile interface{}
+	// err = bson.Unmarshal(results, &findedFile)
 }
 
 func getRandomElement (arrayLength int) int {

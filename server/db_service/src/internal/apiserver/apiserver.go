@@ -22,24 +22,6 @@ type APIServer struct{
 }
 
 func New(config *Config) *APIServer {
-	// var DB_CONNECTION string
-	
-	// if os.Getenv("DB_CONNECTION")  == "" {
-	// 	data,_ := ioutil.ReadFile("config.txt")
-	// 	DB_CONNECTION = string(data)
-	// } else {
-	// 	DB_CONNECTION = os.Getenv("DB_CONNECTION")
-	// }
-
-	// log.Info("Starting DB connection")
-	// ctx, cancel := context.WithTimeout(context.TODO(), 10*time.Second)
-	// defer cancel()
-	// client, err := mongo.Connect(ctx, options.Client().ApplyURI(DB_CONNECTION))
-	// if err != nil { log.Fatal(err) }
-	// log.Info("Successfully connected")
-	// log.Info(client)
-
-	// client := db.Connect()
 	client := db.Connect()
 
 	return &APIServer{
@@ -74,11 +56,6 @@ func (s *APIServer) configureLogger() error {
 func (s *APIServer) configureRouter() {
 	// s.router.HandleFunc("/file/{language}", s.HandleGetFile("go"))
 	s.router.HandleFunc("/", s.HandleHello())
-}
-
-func (s *APIServer) handleGetFile() http.HandlerFunc {
-	return func (w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(("Look to the console")))
-	}
+	s.router.HandleFunc("/find/{language}", s.HandleFind())
 }
 

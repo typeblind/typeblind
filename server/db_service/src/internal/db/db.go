@@ -32,7 +32,7 @@ func Connect() *mongo.Client {
 	ctx, cancel := context.WithTimeout(context.TODO(), 10*time.Second)
 	defer cancel()
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(DB_CONNECTION))
-	if err != nil { log.Fatal(err) }
+	if err != nil { log.Error(err) }
 
 	log.Info("Successfully connected")
 	log.Info(client)

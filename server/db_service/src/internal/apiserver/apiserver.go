@@ -5,12 +5,13 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"os"
-	"io/ioutil"
-	log "github.com/sirupsen/logrus"
-	"context"
-	"time"
+	"github.com/kletskovg/typecode/server/db_service/src/internal/db"
+	// "go.mongodb.org/mongo-driver/mongo/options"
+	// "os"
+	// "io/ioutil"
+	// log "github.com/sirupsen/logrus"
+	// "context"
+	// "time"
 )
 
 type APIServer struct{
@@ -21,22 +22,25 @@ type APIServer struct{
 }
 
 func New(config *Config) *APIServer {
-	var DB_CONNECTION string
+	// var DB_CONNECTION string
 	
-	if os.Getenv("DB_CONNECTION")  == "" {
-		data,_ := ioutil.ReadFile("config.txt")
-		DB_CONNECTION = string(data)
-	} else {
-		DB_CONNECTION = os.Getenv("DB_CONNECTION")
-	}
+	// if os.Getenv("DB_CONNECTION")  == "" {
+	// 	data,_ := ioutil.ReadFile("config.txt")
+	// 	DB_CONNECTION = string(data)
+	// } else {
+	// 	DB_CONNECTION = os.Getenv("DB_CONNECTION")
+	// }
 
-	log.Info("Starting DB connection")
-	ctx, cancel := context.WithTimeout(context.TODO(), 10*time.Second)
-	defer cancel()
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(DB_CONNECTION))
-	if err != nil { log.Fatal(err) }
-	log.Info("Successfully connected")
-	log.Info(client)
+	// log.Info("Starting DB connection")
+	// ctx, cancel := context.WithTimeout(context.TODO(), 10*time.Second)
+	// defer cancel()
+	// client, err := mongo.Connect(ctx, options.Client().ApplyURI(DB_CONNECTION))
+	// if err != nil { log.Fatal(err) }
+	// log.Info("Successfully connected")
+	// log.Info(client)
+
+	// client := db.Connect()
+	client := db.Connect()
 
 	return &APIServer{
 		config: config,

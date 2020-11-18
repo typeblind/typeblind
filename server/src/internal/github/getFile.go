@@ -141,9 +141,11 @@ func createFilesArray (repo []github.RepositoryContent, fileExtension string) []
 
 		match := checkFileForExtension(fileExtension, repo[i])
 
+		
+
 		if match && repo[i].GetSize() > consts.MinCodeSize {
 			code,_ := GetRawFile(repo[i].GetDownloadURL())
-
+		
 			file := GhFile {
 				Name: repo[i].GetName(),
 				Owner: "Some",
@@ -188,13 +190,14 @@ func processDir (dirUrl string, files []GhFile, fileExtension string) ([]GhFile,
 	for i := range data {
 		if data[i].GetSize() > consts.MinCodeSize && len(files) <  MaxFileArraySize {
 			match := checkFileForExtension(fileExtension, data[i])
-
+			
 			if match {
 				code := data[i].GetDownloadURL()
+				raw,_ := GetRawFile(code)
 				file := GhFile {
 					Name: data[i].GetName(),
 					Owner: "Some",
-					Code: code,
+					Code: raw,
 				}
 
 				files = append(files, file)
@@ -206,3 +209,4 @@ func processDir (dirUrl string, files []GhFile, fileExtension string) ([]GhFile,
 
 	return files, nil
 }
+

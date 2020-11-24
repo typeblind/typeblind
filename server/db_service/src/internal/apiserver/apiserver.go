@@ -1,11 +1,11 @@
 package apiserver
 
 import (
-	"net/http"
-	"github.com/sirupsen/logrus"
 	"github.com/gorilla/mux"
-	"go.mongodb.org/mongo-driver/mongo"
 	"github.com/kletskovg/typecode/server/db_service/src/internal/db"
+	"github.com/sirupsen/logrus"
+	"go.mongodb.org/mongo-driver/mongo"
+	"net/http"
 	// "go.mongodb.org/mongo-driver/mongo/options"
 	// "os"
 	// "io/ioutil"

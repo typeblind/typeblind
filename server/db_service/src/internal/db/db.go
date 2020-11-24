@@ -27,8 +27,9 @@ func Connect() *mongo.Client {
 	} else {
 		DB_CONNECTION = os.Getenv("DB_CONNECTION")
 	}
-	
+
 	log.Info("Starting DB connection")
+	log.Info(DB_CONNECTION)
 	ctx, cancel := context.WithTimeout(context.TODO(), 10*time.Second)
 	defer cancel()
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(DB_CONNECTION))

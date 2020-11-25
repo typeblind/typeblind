@@ -5,8 +5,8 @@ import (
 	"github.com/google/go-github/github"
 	log "github.com/sirupsen/logrus"
 	"strings"
-	"github.com/typeblind/typeblind/server/api_service/internal/consts"
-	"github.com/typeblind/typeblind/server/api_service/internal/utils"
+	"github.com/typeblind/typeblind/server/api_service/pkg/consts"
+	"github.com/typeblind/typeblind/server/api_service/pkg/utils"
 )
 
 func GetRandomRepository(language string) (*github.Repository, error) {

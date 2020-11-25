@@ -7,8 +7,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"regexp"
-	"github.com/typeblind/typeblind/server/api_service/internal/consts"
-	"github.com/typeblind/typeblind/server/api_service/internal/utils"
+	"github.com/typeblind/typeblind/server/api_service/pkg/consts"
+	"github.com/typeblind/typeblind/server/api_service/pkg/utils"
 )
 
 var (

@@ -3,8 +3,8 @@ package main
 
 import (
 	"log"
-	"github.com/typeblind/typeblind/server/api_service/internal/app/apiserver"
 	"os"
+	"github.com/typeblind/typeblind/server/api_service/pkg/app/apiserver"
 )
 
 func main() {

@@ -1,3 +1,4 @@
+
 package apiserver
 
 import (
@@ -42,9 +43,9 @@ func (s *APIServer) configureLogger() error {
 }
 
 func (s *APIServer) configureRouter() {
-	//s.router.HandleFunc("/file/{language}/{extension}", s.HandleGetFile())
+	s.router.HandleFunc("/file/{language}/{extension}", s.HandleGetFile())
 	s.router.HandleFunc("/", s.HandleHello())
-	//s.router.HandleFunc("/test", s.HandleTest())
+	s.router.HandleFunc("/test", s.HandleTest())
 }
 
 func (s *APIServer) HandleHello() http.HandlerFunc {

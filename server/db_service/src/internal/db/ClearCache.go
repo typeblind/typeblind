@@ -13,18 +13,9 @@ func clearCache(client *mongo.Client) {
 
 	cache := db.Collection("cache", nil)
 	log.Info("DROPPING CACHE")
-	deleteResult, deleteErr := cache.DeleteMany(context.TODO(), bson.D{})
+	_, deleteErr := cache.DeleteMany(context.TODO(), bson.D{})
 
 	if deleteErr != nil {
 		log.Error(deleteErr)
-	}
-
-	if err := db.CreateCollection(context.TODO(), "cache", nil); err != nil {
-		log.Fatal(err)
-	} else {
-		log.Info("Succesfully create collection")
-		log.WithFields(log.Fields{
-			"result": deleteResult,
-		}).Info("Clear cache")
 	}
 }

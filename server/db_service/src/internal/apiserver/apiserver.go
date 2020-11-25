@@ -2,7 +2,7 @@ package apiserver
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/kletskovg/typecode/server/db_service/src/internal/utils"
+	"github.com/kletskovg/typecode/server/db_service/src/internal/db"
 	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/mongo"
 	"net/http"
@@ -22,13 +22,12 @@ type APIServer struct{
 }
 
 func New(config *Config) *APIServer {
-	//client := db.Connect()
-	utils.GetEnvVar("DB_CONNECTION")
+	client := db.Connect()
 	return &APIServer{
 		Config: config,
 		Logger: logrus.New(),
 		Router: mux.NewRouter(),
-		DbClient: nil,
+		DbClient: client,
 	}
 }
 

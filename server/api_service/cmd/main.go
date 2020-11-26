@@ -1,10 +1,8 @@
-
 package main
-
 import (
+	"github.com/typeblind/typeblind/server/api_service/pkg/app/apiserver"
 	"log"
 	"os"
-	"github.com/typeblind/typeblind/server/api_service/pkg/app/apiserver"
 )
 
 func main() {
@@ -16,4 +14,3 @@ func main() {
 		log.Fatal(err)
 	}
 }
-

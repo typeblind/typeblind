@@ -3,11 +3,10 @@ package github
 import (
 	"context"
 	"github.com/google/go-github/github"
-	"github.com/kletskovg/typecode/server/src/internal/consts"
-	"github.com/kletskovg/typecode/server/src/internal/utils"
 	log "github.com/sirupsen/logrus"
-	// "fmt"
 	"strings"
+	"github.com/typeblind/typeblind/server/api_service/pkg/consts"
+	"github.com/typeblind/typeblind/server/api_service/pkg/utils"
 )
 
 func GetRandomRepository(language string) (*github.Repository, error) {
@@ -41,7 +40,7 @@ func tryToFindRepo(organization string, language string) (*github.Repository, er
 		log.Error("RATE LIMIT ERROR")
 		log.Error(err.Error())
 		return nil, err
-	} 
+	}
 
 	for i := range repos {
 		lang := repos[i].GetLanguage()

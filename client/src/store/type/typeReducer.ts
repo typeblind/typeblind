@@ -46,6 +46,13 @@ export const TypingReducer = (
       };
     }
 
+    // case(inferStringLiteral(types.GET_FILE_PENDING)): {
+    //   return {
+    //     ...state,
+    //     lines: state.lines.filter((line, index) => index !== action.payload )
+    //   };
+    // }
+
     default: {
       return state;
     }

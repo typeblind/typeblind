@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"github.com/google/go-github/github"
 	log "github.com/sirupsen/logrus"
+	"github.com/typeblind/typeblind/server/api_service/pkg/utils"
+	"github.com/typeblind/typeblind/server/api_service/pkg/consts"
 	"io/ioutil"
 	"net/http"
 	"regexp"
-	"github.com/typeblind/typeblind/server/api_service/pkg/consts"
-	"github.com/typeblind/typeblind/server/api_service/pkg/utils"
 )
 
 var (
@@ -51,18 +51,18 @@ func GetFile(language string, languageExtension string) (GhFile, error) {
 		log.Error(err)
 		return GhFile{}, err
 	}
+	
 
-
-	var data []github.RepositoryContent
+	var data []github.RepositoryContent 
 	err = json.Unmarshal(body, &data)
 
 	if err != nil {
 		log.Error(err)
 		return GhFile{}, err
 	}
-
+	
 	utils.ShuffleRepos(data)
-
+	
 
 	files := createFilesArray(data, languageExtension)
 
@@ -80,7 +80,7 @@ func GetFile(language string, languageExtension string) (GhFile, error) {
 
 		randIndex := utils.GetRandomElement(len(files))
 
-
+		
 		return files[randIndex], nil
 	}
 
@@ -93,9 +93,9 @@ func checkFileForExtension (findedFileExtension string, file github.RepositoryCo
 	extension := string(re.Find([]byte(filename)))
 	// If length of extension if less then 0 it means no matches
 	if len(extension) > 0 {
-		return findedFileExtension == extension[1:]
-	}
-
+    return findedFileExtension == extension[1:]
+  } 
+	
 	return false
 }
 
@@ -133,18 +133,18 @@ func createFilesArray (repo []github.RepositoryContent, fileExtension string) []
 		log.WithFields(log.Fields{
 			"type": repo[i].GetType(),
 		}).Info("Check type of repo")
-
+		
 		if len(files) > 20 {
 			break
 		}
 
 		match := checkFileForExtension(fileExtension, repo[i])
 
-
+		
 
 		if match && repo[i].GetSize() > consts.MinCodeSize {
 			code,_ := GetRawFile(repo[i].GetDownloadURL())
-
+		
 			file := GhFile {
 				Name: repo[i].GetName(),
 				Owner: "Some",
@@ -153,7 +153,7 @@ func createFilesArray (repo []github.RepositoryContent, fileExtension string) []
 			files = append(files, file)
 		} else if repo[i].GetSize() == 0 {
 			extractedFiles,_ := processDir(repo[i].GetURL(), files, fileExtension)
-
+			
 			for i := range  extractedFiles {
 				files = append(files, extractedFiles[i])
 			}
@@ -179,7 +179,7 @@ func processDir (dirUrl string, files []GhFile, fileExtension string) ([]GhFile,
 		log.Error(err)
 	}
 
-	var data []github.RepositoryContent
+	var data []github.RepositoryContent 
 	err = json.Unmarshal(body, &data)
 
 	if err != nil {
@@ -189,7 +189,7 @@ func processDir (dirUrl string, files []GhFile, fileExtension string) ([]GhFile,
 	for i := range data {
 		if data[i].GetSize() > consts.MinCodeSize && len(files) <  MaxFileArraySize {
 			match := checkFileForExtension(fileExtension, data[i])
-
+			
 			if match {
 				code := data[i].GetDownloadURL()
 				raw,_ := GetRawFile(code)
@@ -208,3 +208,4 @@ func processDir (dirUrl string, files []GhFile, fileExtension string) ([]GhFile,
 
 	return files, nil
 }
+

@@ -1,6 +1,6 @@
 FROM golang:1.14-buster AS deps
 EXPOSE 8081
-WORKDIR ../
+WORKDIR /
 
 
 COPY ./go.mod ./

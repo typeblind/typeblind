@@ -78,4 +78,8 @@ update.sh
 server/run.sh
 server/run-local.sh
 config.txt
-.github/workflows
+
+**/*.http
+
+.vs
+

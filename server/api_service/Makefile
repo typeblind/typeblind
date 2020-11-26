@@ -1,9 +1,9 @@
 .DEFAULT_GOAL := default
 
 run:
-	go run internal/main.go
+	go run cmd/main.go
 build:
-	go build -v -o . ./internal/main.go
+	go build -v -o . ./cmd/main.go
 
 docker_build:
 	docker build -f deployments/Dockerfile -t testimage .

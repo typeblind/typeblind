@@ -32,6 +32,8 @@ jobs:
 
     - name: Get dependencies
       run: |
+        ls -la $(pwd)/go/src/github.com/typeblind/typeblind/
+        ls -la $(pwd)/go/src/github.com/typeblind/typeblind/server/
         cd $(pwd)/go/src/github.com/typeblind/typeblind/server/db_service/
         go mod download -x
       env:

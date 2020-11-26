@@ -67,6 +67,6 @@ jobs:
     - name: Build Docker image
       run: 
         |
-        docker build  -t ${{ secrets.TYPECODE_DB_IMAGE }} $(pwd)/go/src/github.com/typeblind/typeblind/server/db_service/deployments
+        docker build  -t ${{ secrets.TYPECODE_DB_IMAGE }} $(pwd)/go/src/github.com/typeblind/typeblind/server/db_service/deployments $(pwd)/go/src/github.com/typeblind/typeblind/server/db_service
       env:
         GOPATH: /home/runner/work/typeblind/go

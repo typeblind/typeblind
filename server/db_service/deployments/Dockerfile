@@ -3,13 +3,13 @@ EXPOSE 8081
 WORKDIR /
 
 
-COPY ./src/go.mod ./
-COPY ./src/go.sum ./
+COPY ./go.mod ./
+COPY ./go.sum ./
 RUN go mod download -x
 
 FROM deps AS builder
-COPY ./src ./
-RUN go build -v -o /bin/server ./main.go
+COPY ./ ./
+RUN go build -v -o /bin/server ./cmd/main.go
 
 FROM debian:buster-slim
 RUN set -x && apt-get update && \

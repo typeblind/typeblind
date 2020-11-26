@@ -1,8 +1,10 @@
+
 package main
+
 import (
 	"log"
-	"github.com/kletskovg/typecode/server/src/internal/app/apiserver"
 	"os"
+	"github.com/typeblind/typeblind/server/api_service/pkg/app/apiserver"
 )
 
 func main() {
@@ -14,3 +16,4 @@ func main() {
 		log.Fatal(err)
 	}
 }
+

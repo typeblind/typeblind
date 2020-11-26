@@ -32,14 +32,14 @@ jobs:
 
     - name: Get dependencies
       run: |
-        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/db_service/src
+        cd $(pwd)/go/src/github.com/typeblind/typeblind/server/db_service/src
         go mod download -x
       env:
         GOPATH: /home/runner/work/typecode/go
     - name: Build
       run: 
         |
-        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/db_service/src
+        cd $(pwd)/go/src/github.com/typeblind/typeblind/server/db_service/src
         go build -v .
       env:
         GOPATH: /home/runner/work/typecode/go
@@ -47,7 +47,7 @@ jobs:
     - name: Test
       run: 
         |
-        cd $(pwd)/go/src/github.com/kletskovg/typecode/server/db_service/src
+        cd $(pwd)/go/src/github.com/typeblind/typeblind/server/db_service/src
         go test -v ./...
       env:
         GOPATH: /home/runner/work/typecode/go
@@ -60,11 +60,11 @@ jobs:
       uses: actions/checkout@v2
       with:
         fetch-depth: 1
-        path: go/src/github.com/kletskovg/typecode
+        path: go/src/github.com/typeblind/typeblind/
 
     - name: Build Docker image
       run: 
         |
-        docker build  -t ${{ secrets.TYPECODE_DB_IMAGE }} $(pwd)/go/src/github.com/kletskovg/typecode/server/db_service/
+        docker build  -t ${{ secrets.TYPECODE_DB_IMAGE }} $(pwd)/go/src/github.com/typeblind/typeblind/server/db_service/
       env:
-        GOPATH: /home/runner/work/typecode/go
+        GOPATH: /home/runner/work/typeblind/go

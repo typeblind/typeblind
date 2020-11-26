@@ -17,6 +17,8 @@ func GetEnvVar(name string) string {
 
 	if os.Getenv(name)  == "" {
 		file, _ := ioutil.ReadFile("config.txt")
+		fmt.Println("FILE INFO")
+		fmt.Println(file)
 		envVars := strings.Split(string(file), ";")
 
 		for i := range envVars {

@@ -37,14 +37,14 @@ jobs:
         cd $(pwd)/go/src/github.com/typeblind/typeblind/server/db_service/
         go mod download -x
       env:
-        GOPATH: /home/runner/work/typecode/go
+        GOPATH: /home/runner/work/typeblind/go
     - name: Build
       run: 
         |
         cd $(pwd)/go/src/github.com/typeblind/typeblind/server/db_service/
         go build -v .
       env:
-        GOPATH: /home/runner/work/typecode/go
+        GOPATH: /home/runner/work/typeblind/go
 
     - name: Test
       run: 
@@ -52,7 +52,7 @@ jobs:
         cd $(pwd)/go/src/github.com/typeblind/typeblind/server/db_service/
         go test -v ./...
       env:
-        GOPATH: /home/runner/work/typecode/go
+        GOPATH: /home/runner/work/typeblind/go
 
   docker:
     needs: build

@@ -1,2 +1,2 @@
 export const ANIMATED_PATHS = ['/', '/frontend', '/devops'];
-export const API_URL = "http://localhost:8081"
+export const API_URL = "http://api.typecode.kletskovg.tech"

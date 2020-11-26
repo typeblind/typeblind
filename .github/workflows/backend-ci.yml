@@ -40,7 +40,7 @@ jobs:
       run: 
         |
         cd $(pwd)/go/src/github.com/typeblind/typeblind/server/api_service
-        go build -v .
+        make build
       env:
         GOPATH: /home/runner/work/typeblind/go
 
@@ -48,6 +48,6 @@ jobs:
       run: 
         |
         cd $(pwd)/go/src/github.com/typeblind/typeblind/server/api_service
-        go test -v ./...
+        make test
       env:
         GOPATH: /home/runner/work/typeblind/go

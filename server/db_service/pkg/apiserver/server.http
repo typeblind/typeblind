@@ -1,0 +1,10 @@
+POST http://localhost:8081/insert
+Content-Type: application/json
+
+{
+    "Name": "file.go",
+	"Code": "string of file",
+	"Owner":  "google",
+	"Language": "Go"
+}
+###

@@ -26,5 +26,5 @@ jobs:
         name: ${{ secrets.TYPECODE_DB_IMAGE }}
         username: ${{secrets.DOCKER_LOGIN}}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        context: go/src/github.com/typeblind/typeblind/server/db_service/
+        context: go/src/github.com/typeblind/typeblind/server/db_service/deployments
 

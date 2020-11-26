@@ -26,5 +26,5 @@ jobs:
           name: ${{ secrets.TYPECODE_API }}
           username: ${{secrets.DOCKER_LOGIN}}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          context: go/src/github.com/kletskovg/typeblind/typeblind/
+          context: go/src/github.com/kletskovg/typeblind/typeblind/deployments
 

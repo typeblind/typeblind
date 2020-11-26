@@ -80,3 +80,6 @@ server/run-local.sh
 config.txt
 
 **/*.http
+
+.vs
+

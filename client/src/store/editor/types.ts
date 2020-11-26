@@ -1,0 +1,5 @@
+export const CHANGE_BOARD_CHAR = 'CHANGE_BOARD_CHAR';
+export const CHANGE_CUR_ROW = 'CHANGE_CUR_ROW';
+export const CHANGE_CUR_CHAR = 'CHANGE_CUR_CHAR';
+export const CHANGE_ROW = 'CHANGE_ROW';
+

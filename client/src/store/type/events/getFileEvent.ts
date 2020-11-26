@@ -8,7 +8,7 @@ export const getFileEvent = (language: string, extension: string) => {
   return async (dispatch: Dispatch<any>) => {
     dispatch(actions.getFilePending());
 
-    fetch(`${API_URL}/file/${language}/${extension}`)
+    fetch(`${API_URL}/test`)
       .then(res => res.json())
       .then(json => {
         console.log(json)

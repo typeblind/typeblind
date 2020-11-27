@@ -107,3 +107,19 @@ code {
 .hljs-emphasis {
   font-style: italic;
 }
+
+.executed span, .executed{
+  color: gray !important;
+}
+
+.active-char {
+  background-color: green;
+}
+
+.error-char {
+  color: red !important;
+}
+
+.executed-char {
+  color: gray !important;
+}

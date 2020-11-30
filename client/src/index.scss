@@ -107,3 +107,25 @@ code {
 .hljs-emphasis {
   font-style: italic;
 }
+
+.active-char {
+  background-color: green;
+}
+
+.error-char span, .error-char {
+  color: red !important;
+}
+
+.executed-char span, .executed-char, .executed, .executed span {
+  color: gray !important;
+}
+
+pre {
+  margin: 0;
+}
+
+#codes {
+  width: 70%;
+  margin: 0 auto;
+  padding: 30px;
+}

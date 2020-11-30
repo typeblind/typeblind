@@ -36,7 +36,7 @@ const LangCard: FC<LangCardProps> = ({ name, color, extension, description }) =>
     <>
       <div
         onClick={() => {
-          setLocation(`/type/${name}/${extension.substr(1, extension.length)}`)
+          setLocation(`/type/${name.toLowerCase()}/${extension.substr(1, extension.length)}`)
         }}
         css={cardStyles}
       >

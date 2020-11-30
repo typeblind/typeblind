@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"github.com/google/go-github/github"
 	log "github.com/sirupsen/logrus"
-	"github.com/typeblind/typeblind/server/api_service/pkg/utils"
 	"github.com/typeblind/typeblind/server/api_service/pkg/consts"
+	"github.com/typeblind/typeblind/server/api_service/pkg/utils"
 	"io/ioutil"
 	"net/http"
 	"regexp"
@@ -25,7 +25,7 @@ type GhFile struct {
 func GetFile(language string, languageExtension string) (GhFile, error) {
 	log.Info("GETTIG REPO WITH LANGUAGE " + language)
 	repo, err := GetRandomRepository(language)
-
+	//return GhFile{}, errors.New("Hello world")
 	if err != nil {
 		log.Error("GETTING REPO ERROR")
 		log.Error(err)

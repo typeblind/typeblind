@@ -32,22 +32,22 @@ jobs:
 
     - name: Get dependencies
       run: |
-        cd $(pwd)/go/src/github.com/typeblind/typeblind/server/src
+        cd $(pwd)/go/src/github.com/typeblind/typeblind/server/api_service
         go mod download -x
       env:
-        GOPATH: /home/runner/work/typecode/go
+        GOPATH: /home/runner/work/typeblind/go
     - name: Build
       run: 
         |
-        cd $(pwd)/go/src/github.com/typeblind/typeblind/server/src
-        go build -v .
+        cd $(pwd)/go/src/github.com/typeblind/typeblind/server/api_service
+        make build
       env:
-        GOPATH: /home/runner/work/typecode/go
+        GOPATH: /home/runner/work/typeblind/go
 
     - name: Test
       run: 
         |
-        cd $(pwd)/go/src/github.com/typeblind/typeblind/server/src
-        go test -v ./...
+        cd $(pwd)/go/src/github.com/typeblind/typeblind/server/api_service
+        make test
       env:
         GOPATH: /home/runner/work/typeblind/go

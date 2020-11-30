@@ -5,6 +5,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/typeblind/typeblind/server/db_service/pkg/db"
 	"github.com/typeblind/typeblind/server/db_service/pkg/utils"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -14,6 +15,15 @@ func (server *APIServer) HandleInsert () http.HandlerFunc {
 
 		var file db.File
 		err := json.NewDecoder(r.Body).Decode(&file)
+
+		if r.Body != nil {
+			defer r.Body.Close()
+		}
+
+		body,_ := ioutil.ReadAll(r.Body)
+		log.Info("REQUEST")
+		log.Info(body)
+		log.Info(r.Body)
 
 		if err != nil {
 			defer log.WithFields(log.Fields{

@@ -3,7 +3,10 @@
 run:
 	go run cmd/main.go
 build:
-	go build -v -o . ./internal/main.go
+	go build -v -o . ./cmd/main.go
+
+test:
+	go test -v ./...
 
 docker_build:
 	docker build -f deployments/Dockerfile -t testimage .

@@ -5,6 +5,9 @@ run:
 build:
 	go build -v -o . ./cmd/main.go
 
+test:
+	go test -v ./...
+
 docker_build:
 	docker build -f deployments/Dockerfile -t testimage .
 docker_run:

@@ -4,7 +4,9 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/typeblind/typeblind/server/db_service/pkg/db"
 	"github.com/typeblind/typeblind/server/db_service/pkg/utils"
+	//"go.mongodb.org/mongo-driver/bson"
 	"net/http"
+	"encoding/json"
 )
 
 func (server *APIServer) HandleFind () http.HandlerFunc {
@@ -12,7 +14,10 @@ func (server *APIServer) HandleFind () http.HandlerFunc {
 		utils.EnableCors(&w)
 		params := mux.Vars(r)
 		language := params["language"]
-		db.FindFile(server.DbClient, language)
-		w.Write([]byte("Handle Find File" + language))
+		file := db.FindFile(server.DbClient, language)
+		//var resultFile db.File
+		//bson.Unmarshal(dbFile[0], &resultFile)
+		result,_ := json.Marshal(file)
+		w.Write(result)
 	}
 }

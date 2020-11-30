@@ -11,7 +11,7 @@ import (
 
 type File struct {
 	Name string
-	Code [][]string
+	Code string
 	Owner string
 	Language string
 }

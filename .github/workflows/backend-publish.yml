@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
     paths:
-      - 'server/src/**'
+      - 'server/api_service/**'
       - '.github/**'
 
 jobs:
@@ -26,6 +26,6 @@ jobs:
           name: ${{ secrets.TYPECODE_API }}
           username: ${{secrets.DOCKER_LOGIN}}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          dockerfile: go/src/github.com/kletskovg/typeblind/typeblind/server/api_service/deployments/Dockerfile
+          dockerfile: go/src/github.com/typeblind/typeblind/server/api_service/deployments/Dockerfile
           context: go/src/github.com/kletskovg/typeblind/typeblind/server/api_service
 

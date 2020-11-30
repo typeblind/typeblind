@@ -8,10 +8,8 @@ import {
   ChangeFullRow,
 } from "../../../../store/editor/actions";
 import { getFileEvent } from "../../../../store/type/events/getFileEvent";
-import { hljs } from "../../../../utils";
 import { CurrentRow } from "./CurrentRow";
 import Line from "./Line";
-import Highlight from 'react-highlight.js';
 
 
 export default function Editor() {
@@ -24,18 +22,17 @@ export default function Editor() {
   const curRow1 = useSelector((state: RootState) => state.editor.curRow);
   const fullRow = useSelector((state: RootState) => state.editor.row);
 
-  const codeRef = useRef(null);
+  const codeRef = useRef<HTMLTextAreaElement>(null);
   const [match, params] = useRoute("/type/:language/:extension");
   useEffect(() => {
     dispatch(
       getFileEvent(params?.language as string, params?.extension as string)
     );
+    codeRef.current && codeRef.current.focus() // && (codeRef.current.style.)
   }, []);
 
   useEffect(() => {
-    //setCurRow(lines[curRow1]);
     dispatch(ChangeFullRow(lines[curRow1]));
-
     // hljs.hlBlock((codeRef.current as unknown) as HTMLElement)
   }, [lines]);
 
@@ -59,10 +56,9 @@ export default function Editor() {
       {curChar}
       {curRow1}
         
-      <textarea name="" id="" onKeyDown={(e) => changeInput(e)} />
-
-
-      <div id="#codes" className={params?.language} ref={codeRef}>
+      <textarea ref={codeRef} name="" id="" onKeyDown={(e) => changeInput(e)} />
+      <div>Timer</div>
+      <div id="codes" className={params?.language} onClick={() =>codeRef.current && codeRef.current.focus()} >
         {lines?.length > 0
           ? lines.map(
               (line, index) =>
@@ -70,10 +66,10 @@ export default function Editor() {
                   <CurrentRow
                     key={index}
                     id={index}
-                    row={fullRow && fullRow.filter((char) => char !== "\t")}
+                    row={fullRow && [...fullRow.filter((char) => char !== "\t"), "Enter"]}
                   />
                 ) : (
-                  <Line line={line} id={index} key={index} executed={curRow1 > index} />
+                  <Line current={index === curRow1} line={line} id={index} key={index} executed={curRow1 > index} />
                 )
             )
           : null}

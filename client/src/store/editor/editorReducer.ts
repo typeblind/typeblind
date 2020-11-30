@@ -24,9 +24,12 @@ export const editorReducer = (state = initialState, action: EditorAction) => {
       return { ...state, curRow: state.curRow + action.payload, curChar: 0 };
     }
     case types.CHANGE_CUR_CHAR: {
+      console.log("CHANGE_CUR_CHAR");
       return { ...state, curChar: state.curChar + action.payload };
     }
     case types.CHANGE_ROW: {
+      console.log("ChangeRow");
+      
       return { ...state, row: action.payload };
     }
     default: {

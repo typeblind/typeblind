@@ -14,4 +14,4 @@ docker_run:
 	docker build -f deployments/Dockerfile -t testimage .
 	docker run --rm -p 8081:8081 testimage
 
-default: runц
+default: run

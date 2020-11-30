@@ -71,6 +71,7 @@ func processFile(language string, extension string) []byte {
 	log.Info("LOOK AT THE FILE")
 	log.Info(ghFile)
 	cacheJson,_ := json.Marshal(ghFile)
+	log.Info(cacheJson)
 	requestUrl := []string{consts.DB_SERVICE_URL, "/insert"}
 	res, err := http.Post(strings.Join(requestUrl, ""), "application/json", bytes.NewBuffer(cacheJson))
 

@@ -21,6 +21,7 @@ func InsertFile(client *mongo.Client, file File) *mongo.InsertOneResult {
 	if err != nil {
 		log.WithFields(log.Fields{
 			"file": file,
+			"err": err,
 		}).Error("During inserting file to cache")
 	}
 

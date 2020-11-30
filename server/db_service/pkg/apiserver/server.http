@@ -1,10 +1,40 @@
-POST http://localhost:8081/insert
+GET http://localhost:8082/find/javascript
+Accept: application/json
+
+###
+POST http://localhost:8082/insert
 Content-Type: application/json
 
 {
     "Name": "file.go",
 	"Code": "string of file",
 	"Owner":  "google",
-	"Language": "Go"
+	"Language": "go"
 }
 ###
+
+
+POST http://localhost:8082/insert
+Content-Type: application/json
+
+{
+  "Name": "index.js",
+  "Code": "string of file",
+  "Owner":  "google",
+  "Language": "javascript"
+}
+###
+
+
+POST http://localhost:8082/insert
+Content-Type: application/json
+
+{
+  "Name": "index.ts",
+  "Code": "string of file",
+  "Owner":  "google",
+  "Language": "typescipt"
+}
+###
+
+

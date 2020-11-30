@@ -33,5 +33,5 @@ func AppliedOrgs () []string {
 const MinCodeSize = 1000
 
 // DB_SERVICE_URL url of TypeCode db service
-const DB_SERVICE_URL = "http://localhost:8082"
-//const DB_SERVICE_URL = "http://db.typecode.kletskovg.tech/"
+//const DB_SERVICE_URL = "http://localhost:8082"
+const DB_SERVICE_URL = "http://db.typecode.kletskovg.tech/"

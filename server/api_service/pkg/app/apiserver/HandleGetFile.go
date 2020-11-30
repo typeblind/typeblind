@@ -4,13 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"github.com/gorilla/mux"
-	"net/http"
-	"strings"
 	log "github.com/sirupsen/logrus"
 	"github.com/typeblind/typeblind/server/api_service/pkg/consts"
 	"github.com/typeblind/typeblind/server/api_service/pkg/github"
 	"github.com/typeblind/typeblind/server/api_service/pkg/utils"
-	"io/ioutil"
+	"net/http"
+	"strings"
 )
 
 func (server *APIServer) HandleGetFile () http.HandlerFunc {
@@ -47,31 +46,25 @@ func processFile(language string, extension string) []byte {
 	ghFile, getFileErr := github.GetFile(language, extension)
 
 	if getFileErr != nil {
-		//
-		//log.Info("GIHUB FILE IN PROCESS FILE")
-		//log.Info(cachedFile)
-		//
-		//htmlStr, _ := cachedFile["htmlUrl"].(string)
-		//raw, _ := github.GetRawFile(string(htmlStr))
-		//file.Code = raw
-		//
-		//if name, ok := cachedFile["language"].(string); ok {
-		//	file.Name = name
-		//}
-		//
-		//if owner, ok := cachedFile["rawUrl"].(string); ok {
-		//	file.Owner = owner
-		//}
 
-		log.Info(file)
+		cachedFile := getFileFromDB(language)
+		lines := splitRawByLines(cachedFile.Code)
+		result := map[string]interface{} {
+			"data": lines,
+			"file": cachedFile.Name,
+			"owner": cachedFile.Owner,
+		}
+
+		log.Info("FINAL RESULT")
+		log.Info(result)
+
+		jsonValue, _ := json.Marshal(result)
+		return jsonValue
 	} else {
 		file.Code = ghFile.Code
 	}
 
-	log.Info("LOOK AT THE FILE")
-	log.Info(ghFile)
 	cacheJson,_ := json.Marshal(ghFile)
-	log.Info(cacheJson)
 	requestUrl := []string{consts.DB_SERVICE_URL, "/insert"}
 	res, err := http.Post(strings.Join(requestUrl, ""), "application/json", bytes.NewBuffer(cacheJson))
 
@@ -83,9 +76,6 @@ func processFile(language string, extension string) []byte {
 		defer res.Body.Close()
 	}
 
-	body, _ := ioutil.ReadAll(res.Body)
-	log.Info("CHECK DB RESPONSE")
-	log.Info(string(body))
 	lines := splitRawByLines(file.Code)
 	result := map[string]interface{}{
 		"data": lines,
@@ -94,4 +84,27 @@ func processFile(language string, extension string) []byte {
 	}
 	jsonValue, _ := json.Marshal(result)
 	return jsonValue
+}
+
+func getFileFromDB(language string) github.GhFile {
+	requestUrl := consts.DB_SERVICE_URL + "/find/" + language
+	res, err := http.Get(requestUrl)
+
+	if err != nil {
+		log.Error(err)
+	}
+
+	if res.Body != nil {
+		defer res.Body.Close()
+	}
+
+	var file github.GhFile
+	log.Info("Result in DB")
+	err = json.NewDecoder(res.Body).Decode(&file)
+	if err != nil {
+		log.Error(err)
+	}
+	log.Info(file)
+
+	return file
 }

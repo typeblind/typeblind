@@ -112,11 +112,11 @@ code {
   background-color: green;
 }
 
-.error-char {
+.error-char span, .error-char {
   color: red !important;
 }
 
-.executed-char {
+.executed-char span, .executed-char, .executed, .executed span {
   color: gray !important;
 }
 

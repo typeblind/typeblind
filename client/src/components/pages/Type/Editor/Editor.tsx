@@ -48,7 +48,6 @@ export default function Editor() {
 
 
   const changeInput = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    console.log(e.key)
     dispatch(ChangeBoardChar(e.key));
   };
 

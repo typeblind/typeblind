@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, useCallback } from "react";
+import React, { FC, useEffect, useState, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRoute } from "wouter";
 import { RootState } from "../../../../store";
@@ -12,23 +12,25 @@ type CurrentRowType = {
 };
 
 export const CurrentRow: FC<CurrentRowType> = ({ row, id }) => {
-  //const [classes, setClasses] = useState<string[]>([]);
+  const [chars, setChars] = useState<NodeListOf<HTMLElement>>();
+  const [prevChar, setPrevChar] = useState<Element | null>();
   const [errorChar, setErrorChar] = useState(false);
-  const [newLineWithEnter, setnewLineWithEnter] = useState<string[]>([]);
   const curChar = useSelector((state: RootState) => state.editor.curChar);
   const boardChar = useSelector((state: RootState) => state.editor.boardChar);
   const dispatch = useDispatch();
   const [match, params] = useRoute("/type/:language/:extension");
 
   useEffect(() => {
-    row && setnewLineWithEnter([...row, "Enter"]);
+    const char = document.querySelector(`#char-${curChar}`)
+    setPrevChar(char) // запоминаем предыдущий активный символ ???
+    char?.classList.add('active-char')
   }, [row]);
 
+
   const checkSymbol = () => {
-    if (row && boardChar === newLineWithEnter[curChar]) {
-      console.log("check");
+    if (row && boardChar === row[curChar]) {
       setErrorChar(false);
-      (newLineWithEnter[curChar] === "Enter") ? dispatch(ChangeRow(1)) : dispatch(ChangeChar(1));
+      (row[curChar] === "Enter") ? dispatch(ChangeRow(1)) : dispatch(ChangeChar(1));
     } else 
       setErrorChar(true);
   };
@@ -42,14 +44,27 @@ export const CurrentRow: FC<CurrentRowType> = ({ row, id }) => {
       hljs.hlBlock(document.querySelector(`#codes-${id}`) as HTMLElement)
     }, 0);
     setErrorChar(false);
+
   }, []);
 
+   useEffect(() => {
+     if (errorChar){
+      const errorChar = document.querySelector(`#char-${curChar}`)
+      errorChar?.classList.remove('active-char')
+      errorChar?.classList.add('error-char')
+     }
+   }, [errorChar])
+
     useEffect(() => {
-      return () => {
-        console.log("Rerender")
-        console.log(errorChar)
-        console.log(errorChar)
+      if (curChar === 1) { 
+        // исправление бага с выделением активного первого символа строчки, 
+        // почему то без этой проверки активный класс остается при переходе к след. символу 
+        const firstChar = document.querySelector(`#char-0`);
+        firstChar?.classList.remove('active-char')
+        firstChar?.classList.add('executed-char')
       }
+      prevChar?.classList.remove('active-char')
+      prevChar?.classList.add('executed-char')
     }, [curChar])
 
   const updateCodeSyntaxHighlighting = () => {
@@ -84,23 +99,17 @@ export const CurrentRow: FC<CurrentRowType> = ({ row, id }) => {
   return (
       <div >
         <pre id={`codes-${id}`} className={`hljs ${params?.language}`}>
-          {curChar}
           {row &&
             row.map((char, index) => {    
-              // console.group(char)
-              // console.log(index)
-              // console.log(index === curChar && !errorChar)
-              // console.log(index === curChar && errorChar)
-              // console.groupEnd()
               return (
                 <span
-                  id={`${curChar}`}
-                  className={`char ${curChar > index ? "executed-char" : ""} ${index === curChar && !errorChar ? "active-char" : ""} ${index === curChar && errorChar ? "error-char" : ""}`}
+                  id={`char-${index}`}
+                 // className={`char ${curChar > index ? "executed-char" : ""} ${index === curChar && !errorChar ? "active-char" : ""} ${index === curChar && errorChar ? "error-char" : ""}`}
                   key={index}
                   style={{display: (char === 'Enter') ? 'none' : ''}}
-                  css={spanStyles}
+                  //css={spanStyles}
                 >                  
-                  <span>{char}</span>
+                  {char}
                   
                 </span>
               );

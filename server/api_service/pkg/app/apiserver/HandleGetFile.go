@@ -66,6 +66,8 @@ func processFile(language string, extension string) []byte {
 
 	cacheJson,_ := json.Marshal(ghFile)
 	requestUrl := []string{consts.DB_SERVICE_URL, "/insert"}
+	log.Info("DB REQUEST URL")
+	log.Info(requestUrl)
 	res, err := http.Post(strings.Join(requestUrl, ""), "application/json", bytes.NewBuffer(cacheJson))
 
 	if err != nil {
@@ -104,7 +106,6 @@ func getFileFromDB(language string) github.GhFile {
 	if err != nil {
 		log.Error(err)
 	}
-	log.Info(file)
 
 	return file
 }

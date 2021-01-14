@@ -8,10 +8,16 @@ build:
 test:
 	go test -v ./...
 
+get:
+	go get -d ./...
+
 docker_build:
 	docker build -f deployments/Dockerfile -t testimage .
 docker_run:
 	docker build -f deployments/Dockerfile -t testimage .
 	docker run --rm -p 8081:8081 testimage
+
+#compose_run:
+#	doc
 
 default: run
